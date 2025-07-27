@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Content - Your App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 50px;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-weight: 300;
+            font-size: 1.8rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dashboard-btn {
+            background: #7ac636;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-btn:hover {
+            background: #528724;
+            transform: translateY(-2px);
+        }
+
+        .logout-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #ee5a5a;
+            transform: translateY(-2px);
+        }
+
+        .table-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .table-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .upload-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 300;
+        }
+
+        .upload-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 5px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #333;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .file-upload-area {
+            border: 3px dashed #d1d5db;
+            border-radius: 15px;
+            padding: 50px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: #fafafb;
+        }
+
+        .file-upload-area:hover,
+        .file-upload-area.dragover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateY(-5px);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #9ca3af;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .upload-subtext {
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.15);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .file-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .file-info.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; height: 0; }
+            to { opacity: 1; height: auto; }
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .upload-section {
+                padding: 25px 20px;
+            }
+
+            .upload-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="assets/logo.png" alt="CGenius Logo" class="logo">
+        <h1>Corporate Gorvernance Analysis Platform</h1>
+        <div class="user-info">
+            <span id="userEmail">default@gmail.com</span>
+            <button class="table-btn" onclick="window.open('table_page.html', '_blank')">View Table</button>
+            <button class="dashboard-btn" onclick="window.open('https://cgenius-4gqtni2zca7fdqtell5yh2.streamlit.app/', '_blank')">
+                View Dashboard
+            </button>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="upload-section">
+            <h2 class="section-title">Upload Content for Analysis</h2>
+            
+            <div class="upload-tabs">
+                <button class="tab-btn active" onclick="switchTab(this, 'pdf')">📄 PDF Upload</button>
+                <button class="tab-btn" onclick="switchTab(this,'url')">🔗 URL Link</button>
+            </div>
+
+            <!-- PDF Upload Tab -->
+            <div id="pdfTab" class="tab-content active">
+                <form id="pdfForm">
+                    <div class="file-upload-area" onclick="document.getElementById('pdfFile').click()">
+                        <div class="upload-icon">📁</div>
+                        <div class="upload-text">Click to select PDF file or drag and drop</div>
+                        <div class="upload-subtext">Supports PDF files up to 50MB</div>
+                    </div>
+                    <input type="file" id="pdfFile" class="file-input" multiple accept=".pdf" onchange="handleFileSelect(this)">
+                    
+                    <div id="fileInfo" class="file-info">
+                        <strong>Selected file:</strong> <span id="fileName"></span><br>
+                        <strong>Size:</strong> <span id="fileSize"></span>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="pdfSubmitBtn" disabled>
+                        Process PDF Document
+                    </button>
+                </form>
+            </div>
+
+            <!-- URL Upload Tab -->
+            <div id="urlTab" class="tab-content">
+                <form id="urlForm">
+                    <div class="form-group">
+                        <label for="urlInput">Website URL</label>
+                        <input type="url" id="urlInput" placeholder="https://example.com" required>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        Process URL Content
+                    </button>
+                </form>
+            </div>
+
+            <div id="statusMessage" class="status-message"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        
+        // Tab switching functionality
+        function switchTab(button, tabType) {
+            // Update tab buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+            // Update tab content
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.getElementById(tabType + 'Tab').classList.add('active');
+
+            hideStatusMessage();
+        }
+
+        // File handling
+window.handleFileSelect = function(input) {
+    const files = input.files;
+    const fileInfo = document.getElementById('fileInfo');
+    const submitBtn = document.getElementById('pdfSubmitBtn');
+
+    if (files.length > 0) {
+        let error = false;
+        let fileNames = [];
+
+        for (const file of files) {
+            if (file.type !== 'application/pdf') {
+                showStatusMessage('Please select PDF files only.', 'error');
+                error = true;
+                break;
+            }
+            if (file.size > 50 * 1024 * 1024) {
+                showStatusMessage('Each file must be less than 50MB.', 'error');
+                error = true;
+                break;
+            }
+            fileNames.push(file.name + ` (${formatFileSize(file.size)})`);
+        }
+
+        if (!error) {
+            document.getElementById('fileName').textContent = fileNames.join(', ');
+            fileInfo.classList.add('show');
+            submitBtn.disabled = false;
+            hideStatusMessage();
+        } else {
+            input.value = '';
+            fileInfo.classList.remove('show');
+            submitBtn.disabled = true;
+        }
+    }
+}
+
+
+        // Drag and drop functionality
+        const uploadArea = document.querySelector('.file-upload-area');
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                document.getElementById('pdfFile').files = files;
+                handleFileSelect(document.getElementById('pdfFile'));
+            }
+        });
+
+        // Form submissions with API calls//-----------------------------------------------------------
+        document.getElementById('pdfForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const files = document.getElementById('pdfFile').files;
+            const submitBtn = document.getElementById('pdfSubmitBtn');
+
+            if (files.length === 0) {
+                showStatusMessage('No files selected.', 'error');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+            showStatusMessage('Uploading files...', 'success');
+
+            let allSuccess = true;
+
+            for (const file of files) {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append("user_id", localStorage.getItem("user_id"));
+
+                try {
+                const response = await fetch('https://cgenius-docker.onrender.com/upload', {
+                method: 'POST',
+                body: formData
+                })
+
+                const result = await response.json();
+                if (response.ok && result && !result.error) {
+                showStatusMessage(`✅ ${file.name} uploaded successfully.`, 'success');
+                } else {
+                const errorMsg = result?.error || 'Upload failed with unknown error.';
+                showStatusMessage(`❌ Upload failed for ${file.name}: ${errorMsg}`, 'error');
+                }
+
+                } catch (error) {
+                allSuccess = false;
+                console.error('Upload error:', error);
+                showStatusMessage(`❌ Upload error for ${file.name}: ${error.message}`, 'error');
+                }
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Process PDF Document';
+
+            if (allSuccess) {
+                showStatusMessage('🎉 All files uploaded successfully!', 'success');
+            }
+            });
+
+
+        document.getElementById('urlForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const url = document.getElementById('urlInput').value;
+            const description = document.getElementById('urlDescription').value;
+            const submitBtn = this.querySelector('button[type="submit"]');
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing URL...';
+            showStatusMessage('Processing URL content...', 'success');
+
+            try {
+                const response = await fetch("https://cgenius-docker.onrender.com/api/process-url", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${getAuthToken()}`
+                    },
+                    body: JSON.stringify({
+                        url: url,
+                        description: description,
+                        userId: window.currentUser?.email || 'anonymous',
+                        timestamp: new Date().toISOString()
+                    })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    showStatusMessage(`URL processed successfully! Job ID: ${result.jobId}`, 'success');
+                    setTimeout(() => {
+                        window.location.href = `dashboard.html?jobId=${result.jobId}`;
+                    }, 1500);
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Processing failed');
+                }
+            } catch (error) {
+                console.error('URL processing error:', error);
+                showStatusMessage(`Processing failed: ${error.message}`, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Process URL Content';
+            }
+        });
+            
+        // Utility functions
+        function getAuthToken() {
+            // Get authentication token from localStorage, sessionStorage, or cookies
+            // Since we can't use localStorage in artifacts, return a placeholder
+            return 'your-jwt-token-here';
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showStatusMessage(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message ${type}`;
+            statusDiv.style.display = 'block';
+        }
+
+        function hideStatusMessage() {
+            document.getElementById('statusMessage').style.display = 'none';
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                // Clear any stored login data
+                localStorage.clear();
+                sessionStorage.clear();
+
+                // Redirect to login page
+                window.location.href = "/login";
+            }
+        }
+
+        // Initialize user info
+        window.addEventListener('load', function() {
+            // In a real app, get this from session/auth
+            const userEmail = localStorage.getItem("user_email");
+            const userId = localStorage.getItem("user_id");
+
+            if (userEmail && userId) {
+                document.getElementById("userEmail").textContent = userEmail;
+            } else {
+                window.location.href = "/login";
+            }
+        });
+
+
+    </script>
+</body>
+</html>
