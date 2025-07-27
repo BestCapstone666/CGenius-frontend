@@ -312,7 +312,8 @@
         <div class="user-info">
             <span id="userEmail">default@gmail.com</span>
             <button class="table-btn" onclick="window.open('table_page.html', '_blank')">View Table</button>
-            <button class="dashboard-btn" onclick="window.open('https://cgenius-4gqtni2zca7fdqtell5yh2.streamlit.app/', '_blank')">
+            <button class="dashboard-btn" 
+                onclick="window.open('https://cgenius-dashboard.onrender.com/?user_id=' + localStorage.getItem('user_id'), '_blank')">
                 View Dashboard
             </button>
             <button class="logout-btn" onclick="logout()">Logout</button>
