@@ -465,6 +465,7 @@
     const {
       data: { user }
     } = await supabaseClient.auth.getUser();
+      console.log("Logged in UID:", user?.id);
     if (!user) {
       console.error("No user logged in");
       return;
