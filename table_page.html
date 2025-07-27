@@ -36,26 +36,87 @@
     }
 
     .header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 30px;
-      margin-bottom: 30px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      text-align: center;
+        background: white;
+        padding: 20px 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family:Roboto;
+    }
+
+    .logo {
+        height: 50px;
+        margin-right: 15px;
+        vertical-align: middle;
+    }
+    
+    .header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
     }
 
     .header h1 {
-      color: #333;
-      font-size: 2.5rem;
-      font-weight: 300;
-      letter-spacing: -1px;
-      margin-bottom: 10px;
+        color: #333;
+        font-weight: 300;
+        font-size: 1.8rem;
     }
 
-    .header p {
-      color: #666;
-      font-size: 1.1rem;
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .dashboard-btn {
+        background: #7ac636;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .dashboard-btn:hover {
+        background: #528724;
+        transform: translateY(-2px);
+    }
+
+    .logout-btn {
+        background: #ff6b6b;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .logout-btn:hover {
+        background: #ee5a5a;
+        transform: translateY(-2px);
+    }
+
+    .table-btn {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .table-btn:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
     }
 
     .table-container {
@@ -80,14 +141,15 @@
     }
 
     th {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      background: linear-gradient(135deg, #64748b 100%, #e1e5e9 100%);
+      color: #e1e5e9;
       font-weight: 600;
       font-size: 0.95rem;
       letter-spacing: 0.5px;
       position: sticky;
       top: 0;
       z-index: 10;
+      text-align: center;
     }
 
     th:first-child {
@@ -285,10 +347,19 @@
   </style>
 </head>
 <body>
-  <div class="container">
     <div class="header">
-      <h1>Your Database</h1>
-      <p>Manage and track your corporate governance data</p>
+        <a href="index.html">
+            <img src="assets/logo.png" alt="CGenius Logo" class="logo">
+        </a>
+        <h1>Manage & Track Your Data</h1>
+        <div class="user-info">
+            <button class="table-btn" onclick="window.open('main_page.html', '_blank')">Upload Report</button>
+            <button class="dashboard-btn" 
+                onclick="window.open('https://cgenius-dashboard.onrender.com/?user_id=' + localStorage.getItem('user_id'), '_blank')">
+                View Dashboard
+            </button>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
     </div>
 
     <div class="search-box">
@@ -296,7 +367,7 @@
     </div>
 
     <div class="table-container">
-      <button class="add-btn" onclick="addRow()">➕ Add New Company</button>
+      <button class="add-btn" onclick="addRow()">+ Add New Company</button>
       
       <table id="dataTable">
         <thead>
@@ -465,6 +536,7 @@
     const {
       data: { user }
     } = await supabaseClient.auth.getUser();
+    console.log("Logged in UID:", user?.id);
     if (!user) {
       console.error("No user logged in");
       return;

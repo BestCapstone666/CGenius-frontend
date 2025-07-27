@@ -9,6 +9,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family:Roboto
         }
 
         body {
@@ -34,6 +35,7 @@
             margin-right: 15px;
             vertical-align: middle;
         }
+        
         .header {
             display: flex;
             align-items: center;
@@ -307,12 +309,15 @@
 </head>
 <body>
     <div class="header">
-        <img src="assets/logo.png" alt="CGenius Logo" class="logo">
+        <a href="index.html">
+            <img src="assets/logo.png" alt="CGenius Logo" class="logo">
+        </a>
         <h1>Corporate Gorvernance Analysis Platform</h1>
         <div class="user-info">
             <span id="userEmail">default@gmail.com</span>
             <button class="table-btn" onclick="window.open('table_page.html', '_blank')">View Table</button>
-            <button class="dashboard-btn" onclick="window.open('https://cgenius-4gqtni2zca7fdqtell5yh2.streamlit.app/', '_blank')">
+            <button class="dashboard-btn" 
+                onclick="window.open('https://cgenius-dashboard.onrender.com/?user_id=' + localStorage.getItem('user_id'), '_blank')">
                 View Dashboard
             </button>
             <button class="logout-btn" onclick="logout()">Logout</button>
@@ -340,7 +345,7 @@
                     
                     <div id="fileInfo" class="file-info">
                         <strong>Selected file:</strong> <span id="fileName"></span><br>
-                        <strong>Size:</strong> <span id="fileSize"></span>
+                        <strong></strong> <span id="fileSize"></span>
                     </div>
 
                     <button type="submit" class="submit-btn" id="pdfSubmitBtn" disabled>
@@ -573,7 +578,7 @@ window.handleFileSelect = function(input) {
                 sessionStorage.clear();
 
                 // Redirect to login page
-                window.location.href = "/login";
+                window.location.href = "login_page.html";
             }
         }
 
