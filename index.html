@@ -8,9 +8,14 @@
     * {margin:0;padding:0;box-sizing:border-box;font-family:Roboto;}
     body {line-height:1.6;color:#333;}
  
- body {
-  padding-top: 50px; 
+
+body, html {
+  margin: 0;
+  padding-top: 10px; 
+  width: 100%;
+  height: 100%;
 }
+
 
     /* Header */
 header {
@@ -505,58 +510,137 @@ header {
 
        /* About */
 
-        .about {
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);;
-        width:100%;
-        padding: 120px 40px;      
-        display: flex;
-        justify-content: center; 
-        }
+      .about {
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.4),
+      rgba(0, 0, 0, 0.4)
+    ),
+    url('assets/cg pic.jpg') no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  padding: 120px 40px;
+  display: flex;
+  justify-content: center;
+}
 
-        .about-content {
-        background: #bcd1db;     
-        color: #000;
-        padding: 60px 40px;      
-        border-radius: 12px;     
-        max-width: 1000px;       
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-        }
+.about-content {
+  background: #f0f8ff;
+  color: #000000;
+  padding: 40px 40px;
+  border-radius: 12px;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
 
-        .about h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-        line-height: 1.3;
-        }
+.about h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
 
-        .about p {
-        font-size: 1.25rem;
-        line-height: 1.6;
-        max-width: 900px;
-        margin: 0 auto;
-        }
+.about p {
+  font-size: 1rem;
+  line-height: 1.4;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
+}
 
 
  /* Problem & Solution */
+.problem {
+  width: 100%;                       /* ✅ avoids scrollbar overflow */
+  max-width: 100vw;                  /* ✅ cap to viewport */
+  min-height: 100vh;
+  padding: 80px 20px;
+  text-align: center;
+  background: #001d3d;
+  color: #ffffff;
+  border-radius: 0px;
+  overflow-x: hidden;                /* ✅ prevent side scroll */
+  box-sizing: border-box;           /* ✅ include padding in width calc */
+}
 
-        .flow1 {
-        display: flex;
-        flex-wrap: wrap;           
-        gap: 20px;               
-        justify-content: center; 
-        margin-top: 30px;          
-        }
-        .card {
-        flex: 1 1 150px;       
-        min-width: 180px;   
-        max-width: 220px;        
-        background: #fafafa;     
-        border: 1px solid #ddd;   
-        border-radius: 8px;       
-        padding: 20px;          
-        text-align: center;        
-        }
+
+.problem h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.problem p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto 12px auto;
+}
+
+.flow1 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.card1 {
+  flex: 1 1 180px;
+  max-width: 220px;
+  min-width: 180px;
+  background: #ffffff;
+  color:#000000;
+  border-radius: 10px;
+  padding: 24px 16px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.card1:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  background-color: #f0f8ff;
+}
+
+.card1 img {
+  width: 50px;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+.solution {
+  width: 100%;                      /* ✅ Fix overflow */
+  max-width: 100vw;                 /* ✅ Safety against horizontal scroll */
+  min-height: 100vh;
+  padding: 80px 20px;
+  text-align: center;
+  background: #004225;
+  color: #ffffff;
+  border-radius: 0;
+  overflow-x: hidden;              /* ✅ Prevent horizontal scroll if anything leaks */
+  box-sizing: border-box;          /* ✅ Ensures padding doesn't add extra width */
+}
+
+
+.solution h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.solution p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto 12px auto;
+}
+
+
+
         .flow2 {
         display: flex;
         flex-wrap: wrap;          
@@ -564,6 +648,27 @@ header {
         justify-content: center;   
         margin-top: 30px;     
         }
+
+
+.card2 {
+  flex: 1 1 180px;
+  max-width: 220px;
+  min-width: 180px;
+  background: #ffffff;
+  color:#000000;
+  border-radius: 10px;
+  padding: 24px 16px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.card2:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  background-color: #f4fff0;
+}
         .workflow-video {
         margin-top: 30px;     
         text-align: center;    
@@ -588,6 +693,12 @@ header {
         min-height: 400px;
         
         }
+        .impact-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
 
         /* Left content */
         .impact-content {
@@ -639,21 +750,32 @@ header {
         border-radius: 10px;
         }
 
-        /* Responsive for small screens */
-        @media (max-width: 768px) {
-        .impact-section {
-            flex-direction: column;
-        }
-        .impact-content,
-        .impact-image {
-            flex: 1 1 100%;
-            text-align: center;
-        }
-        .impact-image img {
-            max-height: 250px;
-            width: auto;
-        }
-        }
+      @media (max-width: 768px) {
+  .impact {
+    flex-direction: column;
+  }
+
+  .impact-content,
+  .impact-image {
+    flex: 1 1 100%;
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .impact-image img {
+    max-height: 250px;
+    width: auto;
+  }
+
+  .impact-item {
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .impact-item .label {
+    margin-bottom: 5px;
+  }
+}
 
 
 /*  General Section  */
@@ -676,14 +798,15 @@ section p {
 
 
 /* MCCG */
-
 .embed-section {
   padding: 60px 20px;
-  max-width: 1000px;
-  margin: auto;
+  width: 100%;              /* full width */
+  min-height: 100vh;         /* optional: full screen height */
+  background: #001d3d;       /* deep dark blue */
+  color: #ffffff;
   text-align: center;
-  background: #f9f9f9; /* light background */
-  border-radius: 8px;
+  border-radius: 0;          /* remove corner rounding */
+  box-sizing: border-box;
 }
 
 .embed-section h2 {
@@ -694,7 +817,7 @@ section p {
 .embed-section p {
   font-size: 16px;
   margin-bottom: 30px;
-  color: #555;
+  color: #ffffff;
 }
 
 .embed-wrapper {
@@ -716,19 +839,57 @@ section p {
   border: none;
 }
 
+/* For tablets and below */
+@media (max-width: 768px) {
+  .embed-wrapper {
+    padding-top: 75%; /* taller aspect ratio for mobile */
+  }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+  .embed-wrapper {
+    padding-top: 100%; /* even taller for narrow screens */
+  }
+}
 
 
 
 
 /* Request */
 .request {
-  background: #ffffff;
-  padding: 80px 20px;       
-  text-align: center;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.3)
+    ),
+    url('assets/cg pic2.jpg') no-repeat center center;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 120px 40px;
+  margin: 0;
+  margin-bottom: 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
+
+
+
 .request-box {
-  background: #c5deff;   
-  max-width: 800px;   
+ background: rgba(255, 255, 255, 0.2);       /* transparent white */
+  backdrop-filter: blur(12px);        
+ max-width: 500px;   
   margin: 0 auto;       
   padding: 40px 20px;   
   border-radius: 12px;  
@@ -739,9 +900,11 @@ section p {
   font-size: 36px;
   margin-bottom: 25px;        
   line-height: 1.3;
+  color:#ffffff;
 }
 
 .request p {
+  color:#ffffff;
   font-size: 18px;
   margin-bottom: 35px;        
   line-height: 1.6;
@@ -750,21 +913,23 @@ section p {
   margin-right: auto;
 }
 
-.request-btn{
+.request-btn {
   padding: 14px 30px;
   font-size: 18px;
   background: #2058ba;
   color: #fff;
   border: none;
   border-radius: 6px;
-  text-decoration: none;
   cursor: pointer;
+  text-decoration: none; /* Remove underline */
+  display: inline-block;
   transition: background 0.3s ease;
 }
 
 .request-btn:hover {
-  background: #092d6e;     
+  background: #092d6e;
 }
+
 
 
 
@@ -772,8 +937,7 @@ section p {
   background: #222;        
   color: #aaa;              
   text-align: center;     
-  padding: 20px;         
-  margin-top: 40px;        
+  padding: 20px;             
 }
 
 footer a {
@@ -793,21 +957,22 @@ footer a:hover {
 <header>
   <nav class="container">
  <div class="logo">
-     <a href="/"> <!-- link to your homepage or desired page -->
+     <a href="landing.html"> <!-- link to your homepage or desired page -->
 
       <img src="assets/logo.png" alt="Cgenius Logo">
     </div>
-   <!-- right actions -->
+   <!-- right actions ***********-->  
     <div class="right-actions">
-      <a href="login_page.html" class="cta-button1">Log In</a>
-      <a href="register_page.html" class="cta-button2">Get Started</a>
+       <a href="login_page.html" class="cta-button1">Log In</a>
+      <a href="register_page.html" class="cta-button2">Sign Up</a>
       <div class="hamburger" onclick="toggleMenu()">☰</div>
     </div>
 
 
     <!-- Hidden Nav -->
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
+      <li><a href="#cg">About</a></li>
+      <li><a href="#problem">Problem</a></li>
       <li><a href="#solution">Solutions</a></li>
       <li><a href="#impact">Statistic</a></li>
       <li><a href="#mccg">MCCG</a></li>
@@ -829,7 +994,7 @@ footer a:hover {
                     </div>
                     <div class="visual-content">
                         <div class="image-container">
-                            <img src="assets/slide1.jpg"  alt="NVIDIA AI Platform" class="slide-image">
+                            <img src="assets/slide1.jpg" alt="NVIDIA AI Platform" class="slide-image">
                            </div>
                     </div>
                 </div>
@@ -840,7 +1005,7 @@ footer a:hover {
             <div class="container">
                 <div class="slide-content">
                     <div class="text-content">
-                        <h1>Guiding Companies the <span class="highlight">Right </span>Way</h1>
+                        <h1>Guiding Companies the <span class="highlight">Right Way</span></h1>
                         <p>Corporate governance shapes the relationship between management, the board, shareholders, and stakeholders, ensuring they work together to achieve common goals.</p>
                         <a href="#request" class="cta-button">Get Started</a>
                     </div>
@@ -883,8 +1048,9 @@ footer a:hover {
     </div>
 
  
-<section class="about" id="about">
+<section class="about" id="cg">
   <div class="about-content">
+    <img src="img/cg icon.png">
     <h1>Corporate Governance</h1>
     <p>“The system that guides and controls a company.”</p>
     <p>“Builds trust with investors, customers, and stakeholders."</p>
@@ -899,13 +1065,16 @@ footer a:hover {
     <p>Extracting governance data manually is slow, inconsistent, and error‑prone. </p>
     <p>CGenius uses AI to automate this process, giving you clean, reliable data in seconds.</p>
     <div class="flow1">
-    <div class="card">
+    <div class="card1">
+       <img src="assets/time icon.png" alt="Time icon" />
         <h3>1. Time-Consuming</h3>
       </div>
-      <div class="card">
+      <div class="card1">
+        <img src="assets/error icon.png" alt="Error icon" />
         <h3>2. Human-Error</h3>
       </div>
-      <div class="card">
+      <div class="card1">
+         <img src="assets/format icon.png" alt="Format icon" />
         <h3>3. Different Format</h3>
       </div>
     </div>
@@ -914,15 +1083,15 @@ footer a:hover {
   <section class="solution" id="solution">
     <h2>How It Works</h2>
     <div class="flow2">
-      <div class="card">
+      <div class="card2">
         <h3>1. Upload PDF</h3>
         <p>Upload your annual report in seconds.</p>
       </div>
-      <div class="card">
+      <div class="card2">
         <h3>2. AI Processes</h3>
         <p>Our system extracts and organizes governance data automatically.</p>
       </div>
-      <div class="card">
+      <div class="card2">
         <h3>3. Get Clean Insights</h3>
         <p>Download Excel/CSV or view on dashboards instantly.</p>
       </div>
@@ -939,8 +1108,10 @@ footer a:hover {
 
 
 
-<section class="impact" id="impact">
-  <div class="impact-content">
+<section class="impact">
+  <div class="impact-wrapper" id="impact">
+  <div class="impact">
+  <div class="impact-content" >
     <h2>MCCG<br>GUIDELINES</h2>
 
     <div class="impact-item">
@@ -967,11 +1138,13 @@ footer a:hover {
 
   <div class="impact-image">
     <img src="assets/mccg.png" alt="mccg">
+     </div>
+  </div>
   </div>
 </section>
 
 
-<section class="mccg" id="mccg">
+<section class="embed-section" id="mccg">
   <h2>MCCG Official Website</h2>
   <p>Explore the MCCG official guidelines directly below:</p>
 
@@ -981,24 +1154,19 @@ footer a:hover {
 </section>
 
 
+
   <section class="request" id="request">
       <div class="request-box">
 
     <h2>Extract Corporate Governance Data in Seconds, Not Days.</h2>
     <p>Upload annual reports and instantly get clean, export‑ready governance data.</p>
     <a href="register_page.html" class="request-btn">Request a Demo</a>
-
     </div>
   </section>
 
 
   <footer>
     <p>© 2025 CGenius. All rights reserved.</p>
-    <p>
-      <a href="#about">About</a> | 
-      <a href="#">Privacy Policy</a> | 
-      <a href="register_page.html">Contact</a>
-    </p>
   </footer>
 
   <script>
