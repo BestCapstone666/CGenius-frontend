@@ -415,7 +415,17 @@ window.handleFileSelect = function(input) {
         }
 
         if (!error) {
-            document.getElementById('fileName').innerHTML = fileNames.map(name => `• ${name}`).join('<br>');
+            const fileInfoContainer = document.getElementById('fileName');
+            fileInfoContainer.innerHTML = `
+                <ul style="padding-left: 20px; margin: 0;">
+                    ${Array.from(files).map((file, index) => `
+                        <li style="margin-bottom: 5px;">
+                            ${file.name} <span style="color: gray;">(${formatFileSize(file.size)})</span>
+                            <span onclick="removeFile(${index})" style="cursor:pointer; color:red; margin-left:10px;">🗑️</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
             fileInfo.classList.add('show');
             submitBtn.disabled = false;
             hideStatusMessage();
@@ -581,6 +591,18 @@ window.handleFileSelect = function(input) {
                 // Redirect to login page
                 window.location.href = "login_page.html";
             }
+        }
+
+        function removeFile(index) {
+            const input = document.getElementById('pdfFile');
+            const dataTransfer = new DataTransfer();
+        
+            Array.from(input.files).forEach((file, i) => {
+                if (i !== index) dataTransfer.items.add(file);
+            });
+        
+            input.files = dataTransfer.files;
+            handleFileSelect(input);  // refresh display
         }
 
         // Initialize user info
