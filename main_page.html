@@ -35,7 +35,7 @@
             margin-right: 15px;
             vertical-align: middle;
         }
-        
+
         .header {
             display: flex;
             align-items: center;
@@ -341,8 +341,7 @@
                         <div class="upload-text">Click to select PDF file or drag and drop</div>
                         <div class="upload-subtext">Supports PDF files up to 50MB</div>
                     </div>
-                    <input type="file" id="pdfFile" class="file-input" multiple accept=".pdf" onchange="handleFileSelect(this)">
-                    
+                    <input type="file" id="pdfFile" class="file-input" multiple accept=".pdf,.zip" onchange="handleFileSelect(this)">
                     <div id="fileInfo" class="file-info">
                         <strong>Selected file:</strong> <span id="fileName"></span><br>
                         <strong></strong> <span id="fileSize"></span>
@@ -399,11 +398,14 @@ window.handleFileSelect = function(input) {
         let fileNames = [];
 
         for (const file of files) {
-            if (file.type !== 'application/pdf') {
-                showStatusMessage('Please select PDF files only.', 'error');
+            const isPDF = file.type === 'application/pdf';
+            const isZIP = file.name.endsWith('.zip');
+
+            if (!isPDF && !isZIP) {
+                showStatusMessage('Only PDF or ZIP files allowed.', 'error');
                 error = true;
                 break;
-            }
+            } 
             if (file.size > 50 * 1024 * 1024) {
                 showStatusMessage('Each file must be less than 50MB.', 'error');
                 error = true;
@@ -413,7 +415,7 @@ window.handleFileSelect = function(input) {
         }
 
         if (!error) {
-            document.getElementById('fileName').textContent = fileNames.join(', ');
+            document.getElementById('fileName').innerHTML = fileNames.map(name => `• ${name}`).join('<br>');
             fileInfo.classList.add('show');
             submitBtn.disabled = false;
             hideStatusMessage();
@@ -504,7 +506,7 @@ window.handleFileSelect = function(input) {
         document.getElementById('urlForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const url = document.getElementById('urlInput').value;
-            const description = document.getElementById('urlDescription').value;
+            const description = '';
             const submitBtn = this.querySelector('button[type="submit"]');
 
             submitBtn.disabled = true;
@@ -520,8 +522,7 @@ window.handleFileSelect = function(input) {
                     },
                     body: JSON.stringify({
                         url: url,
-                        description: description,
-                        userId: window.currentUser?.email || 'anonymous',
+                        user_id: localStorage.getItem("user_id"),  
                         timestamp: new Date().toISOString()
                     })
                 });

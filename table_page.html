@@ -467,7 +467,7 @@
         // UPDATE existing row
         // -------------------
         const { error } = await supabaseClient
-        .from('testing_data')
+        .from('cg_data')
         .update(payload)
         .eq('uuid', sampleData[rowIndex].id);
 
@@ -483,7 +483,7 @@
         // INSERT new row
         // -------------------
         const { data, error } = await supabaseClient
-        .from('testing_data')
+        .from('cg_data')
         .insert([payload])
         .select();
 
@@ -514,7 +514,7 @@
     // 👉 Otherwise delete from Supabase
     if (confirm("Are you sure you want to delete this company?")) {
         const { error } = await supabaseClient
-        .from('testing_data')
+        .from('cg_data')
         .delete()
         .eq('uuid', id);
 
@@ -552,7 +552,7 @@
 
     const isAdmin = adminRows && adminRows.length > 0;
 
-    let query = supabaseClient.from('testing_data').select('*');
+    let query = supabaseClient.from('cg_data').select('*');
     if (!isAdmin) {
       query = query.eq('user_id', userId);
     }
