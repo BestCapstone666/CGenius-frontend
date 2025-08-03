@@ -344,7 +344,6 @@
                     <input type="file" id="pdfFile" class="file-input" multiple accept=".pdf,.zip" onchange="handleFileSelect(this)">
                     <div id="fileInfo" class="file-info">
                         <strong>Selected file:</strong> <span id="fileName"></span><br>
-                        <strong></strong> <span id="fileSize"></span>
                     </div>
 
                     <button type="submit" class="submit-btn" id="pdfSubmitBtn" disabled>
@@ -389,41 +388,40 @@
             hideStatusMessage();
         }
 
+        const dropZone = document.querySelector('.file-upload-area');
+
         // File handling
-window.handleFileSelect = function(input) {
-    const files = input.files;
-    const fileInfo = document.getElementById('fileInfo');
-    const submitBtn = document.getElementById('pdfSubmitBtn');
+        window.handleFileSelect = function(input) {
+            const newFiles = Array.from(input.files);
+            const oldFiles = fileListCache || [];
 
-    const filenames = new Set();
-    const allFiles = [...oldFiles, ...newFiles].filter(f => {
-        if (filenames.has(f.name)) return false;
-        filenames.add(f.name);
-        return true;
-    });
+            const filenames = new Set();
+            const allFiles = [...oldFiles, ...newFiles].filter(f => {
+                if (filenames.has(f.name)) return false;
+                filenames.add(f.name);
+                return true;
+            });
 
-    if (files.length > 0) {
-        let error = false;
-        let fileNames = [];
+            const dataTransfer = new DataTransfer();
+            allFiles.forEach(f => dataTransfer.items.add(f));
 
-        for (const file of files) {
-            const isPDF = file.type === 'application/pdf';
-            const isZIP = file.name.endsWith('.zip');
+            input.files = dataTransfer.files;
+            fileListCache = allFiles;
 
-            if (!isPDF && !isZIP) {
-                showStatusMessage('Only PDF or ZIP files allowed.', 'error');
-                error = true;
-                break;
-            } 
-            if (file.size > 50 * 1024 * 1024) {
-                showStatusMessage('Each file must be less than 50MB.', 'error');
-                error = true;
-                break;
-            }
-        }
+            renderFileList(dataTransfer.files);
+        };
 
-        if (!error) {
+        function renderFileList(files) {
+            const fileInfo = document.getElementById('fileInfo');
+            const submitBtn = document.getElementById('pdfSubmitBtn');
             const fileInfoContainer = document.getElementById('fileName');
+
+            if (!files.length) {
+                fileInfo.classList.remove('show');
+                submitBtn.disabled = true;
+                return;
+            }
+
             fileInfoContainer.innerHTML = `
                 <ul style="padding-left: 20px; margin: 0;">
                     ${Array.from(files).map((file, index) => `
@@ -437,29 +435,7 @@ window.handleFileSelect = function(input) {
             fileInfo.classList.add('show');
             submitBtn.disabled = false;
             hideStatusMessage();
-        } else {
-            input.value = '';
-            fileInfo.classList.remove('show');
-            submitBtn.disabled = true;
         }
-    }
-
-    function handleFileSelect(input) {
-    const newFiles = Array.from(input.files);
-    const oldFiles = fileListCache || [];
-
-    const allFiles = oldFiles.concat(newFiles);
-
-    const dataTransfer = new DataTransfer();
-    allFiles.forEach(f => dataTransfer.items.add(f));
-
-    input.files = dataTransfer.files;
-    fileListCache = allFiles;  // save to global
-
-    renderFileList(dataTransfer.files);
-    }
-}
-
 
         // Drag and drop functionality
         const uploadArea = document.querySelector('.file-upload-area');
@@ -583,10 +559,11 @@ window.handleFileSelect = function(input) {
                 document.getElementById('pdfFile').disabled = false;
                 dropZone.classList.remove('disabled-drop');
 
-                // Clear selection
-                document.getElementById('pdfFile').value = '';
-                document.getElementById('fileName').innerHTML = '';
-            }
+            // Clear selection
+            fileListCache = [];
+            document.getElementById('pdfFile').value = '';
+            renderFileList([]);
+                        }
         });
             
         // Utility functions
