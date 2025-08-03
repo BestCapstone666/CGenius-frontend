@@ -475,7 +475,9 @@
             submitBtn.textContent = "Processing...";
 
             // Redirect immediately to loading page
-            window.location.href = "loading_page.html";
+            const result = await response.json();
+            const jobId = result.job_id;
+            window.location.href = `loading_page.html?job_id=${jobId}`;
 
             document.getElementById('pdfFile').disabled = true;
             dropZone.classList.add('disabled-drop');

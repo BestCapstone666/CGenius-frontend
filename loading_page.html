@@ -218,85 +218,69 @@
         </div>
     </div>
 
-    <script>
-        // Status messages to cycle through
-        const statusMessages = [
-            { main: "Connecting to server", sub: "Establishing secure connection..." },
-            { main: "Uploading files", sub: "Transferring your data safely..." },
-            { main: "Processing request", sub: "Our servers are working on it..." },
-            { main: "Validating data", sub: "Ensuring everything is correct..." },
-            { main: "Finalizing", sub: "Almost ready..." }
-        ];
+<script>
+    const statusElement = document.getElementById('statusMessage');
+    const subStatusElement = document.getElementById('subStatus');
+    const progressBar = document.getElementById('progressBar');
+    const jobId = new URLSearchParams(window.location.search).get("job_id");
 
-        let currentStatusIndex = 0;
-        const statusElement = document.getElementById('statusMessage');
-        const subStatusElement = document.getElementById('subStatus');
-        const progressBar = document.getElementById('progressBar');
+    // Friendly phrases for each status
+    const statusMap = {
+        "Received file": { main: "Receiving your document", sub: "Hold tight, we're getting started..." },
+        "Uploading files": { main: "Uploading files", sub: "Transferring data securely..." },
+        "Processing content": { main: "Analyzing content", sub: "Crunching governance metrics..." },
+        "Extracting metrics": { main: "Extracting insights", sub: "Locating board and audit data..." },
+        "Validating results": { main: "Validating output", sub: "Ensuring everything checks out..." },
+        "Completed": { main: "✅ Upload successful!", sub: "Redirecting to your dashboard..." }
+    };
 
-        // Function to update status message
-        function updateStatus() {
-            const currentStatus = statusMessages[currentStatusIndex];
-            statusElement.innerHTML = currentStatus.main + '<span class="dots"></span>';
-            subStatusElement.textContent = currentStatus.sub;
-            
-            currentStatusIndex = (currentStatusIndex + 1) % statusMessages.length;
-        }
+    let progress = 0;
+    let progressInterval = null;
 
-        // Update status every 2 seconds
-        updateStatus(); // Initial status
-        const statusInterval = setInterval(updateStatus, 2000);
+    function startProgressBar() {
+        progressInterval = setInterval(() => {
+            if (progress < 95) {
+                progress += Math.random() * 8 + 2;
+                progressBar.style.width = Math.min(progress, 95) + "%";
+            }
+        }, 1000);
+    }
 
-        // Function to simulate progress
-        function simulateProgress() {
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += Math.random() * 15 + 5; // Random increment between 5-20%
-                if (progress >= 100) {
-                    progress = 100;
+    function updateStatusFromBackend() {
+        fetch(`https://cgenius-docker.onrender.com/status/${jobId}`)
+            .then(res => res.json())
+            .then(data => {
+                const rawStatus = data.status;
+                const statusObj = statusMap[rawStatus] || { main: rawStatus, sub: "Please wait..." };
+
+                statusElement.innerHTML = statusObj.main + '<span class="dots"></span>';
+                subStatusElement.textContent = statusObj.sub;
+
+                // Accelerate progress on important stages
+                if (["Extracting metrics", "Validating results"].includes(rawStatus)) {
+                    progress = Math.max(progress, 80);
+                }
+
+                if (rawStatus === "Completed") {
                     clearInterval(progressInterval);
-                // Auto-complete and redirect with thank-you message
-                setTimeout(() => {
-                    clearInterval(statusInterval);
-                    statusElement.innerHTML = "✅ Upload successful!";
-                    subStatusElement.textContent = "Redirecting to your dashboard...";
                     progressBar.style.width = "100%";
-
                     setTimeout(() => {
                         const userId = localStorage.getItem("user_id") || "guest";
-                        window.location.href = `https://your-dashboard-url.vercel.app/?user_id=${userId}`;
+                        window.location.href = `table_page.html?user_id=${userId}`;
                     }, 2000);
-                }, 8000);  // Simulate full upload + processing time
                 }
-                progressBar.style.width = progress + '%';
-            }, 800);
-        }
+            })
+            .catch(err => {
+                statusElement.textContent = "Error retrieving status.";
+                subStatusElement.textContent = "Check your connection or try again.";
+                console.error("Polling error:", err);
+            });
+    }
 
-        // Start progress simulation
-        simulateProgress();
-
-        // Function to manually set status (can be called from other scripts)
-        function setStatus(mainText, subText = '') {
-            statusElement.innerHTML = mainText + '<span class="dots"></span>';
-            if (subText) {
-                subStatusElement.textContent = subText;
-            }
-        }
-
-        // Function to set progress manually (0-100)
-        function setProgress(percentage) {
-            progressBar.style.width = Math.min(100, Math.max(0, percentage)) + '%';
-        }
-
-        // Function to complete loading and redirect
-        function completeLoading(redirectUrl = 'main_page.html') {
-            clearInterval(statusInterval);
-            setStatus('Complete!', 'Redirecting...');
-            setProgress(100);
-            
-            setTimeout(() => {
-                window.location.href = redirectUrl;
-            }, 1000);
-        }
-    </script>
+    // Run!
+    startProgressBar();
+    updateStatusFromBackend(); // initial call
+    setInterval(updateStatusFromBackend, 2000);
+</script>
 </body>
 </html>
