@@ -472,7 +472,10 @@
             }
 
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Processing...';
+            submitBtn.textContent = "Processing...";
+
+            // Redirect immediately to loading page
+            window.location.href = "loading_page.html";
 
             document.getElementById('pdfFile').disabled = true;
             dropZone.classList.add('disabled-drop');
