@@ -374,6 +374,8 @@
 
     <script>
         
+        let fileListCache = []
+        
         // Tab switching functionality
         function switchTab(button, tabType) {
             // Update tab buttons
@@ -393,6 +395,13 @@ window.handleFileSelect = function(input) {
     const fileInfo = document.getElementById('fileInfo');
     const submitBtn = document.getElementById('pdfSubmitBtn');
 
+    const filenames = new Set();
+    const allFiles = [...oldFiles, ...newFiles].filter(f => {
+        if (filenames.has(f.name)) return false;
+        filenames.add(f.name);
+        return true;
+    });
+
     if (files.length > 0) {
         let error = false;
         let fileNames = [];
@@ -411,11 +420,20 @@ window.handleFileSelect = function(input) {
                 error = true;
                 break;
             }
-            fileNames.push(file.name + ` (${formatFileSize(file.size)})`);
         }
 
         if (!error) {
-            document.getElementById('fileName').innerHTML = fileNames.map(name => `• ${name}`).join('<br>');
+            const fileInfoContainer = document.getElementById('fileName');
+            fileInfoContainer.innerHTML = `
+                <ul style="padding-left: 20px; margin: 0;">
+                    ${Array.from(files).map((file, index) => `
+                        <li style="margin-bottom: 5px;">
+                            ${file.name} <span style="color: gray;">(${formatFileSize(file.size)})</span>
+                            <span onclick="removeFile(${index})" style="cursor:pointer; color:red; margin-left:10px;">🗑️</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
             fileInfo.classList.add('show');
             submitBtn.disabled = false;
             hideStatusMessage();
@@ -424,6 +442,21 @@ window.handleFileSelect = function(input) {
             fileInfo.classList.remove('show');
             submitBtn.disabled = true;
         }
+    }
+
+    function handleFileSelect(input) {
+    const newFiles = Array.from(input.files);
+    const oldFiles = fileListCache || [];
+
+    const allFiles = oldFiles.concat(newFiles);
+
+    const dataTransfer = new DataTransfer();
+    allFiles.forEach(f => dataTransfer.items.add(f));
+
+    input.files = dataTransfer.files;
+    fileListCache = allFiles;  // save to global
+
+    renderFileList(dataTransfer.files);
     }
 }
 
@@ -464,6 +497,10 @@ window.handleFileSelect = function(input) {
 
             submitBtn.disabled = true;
             submitBtn.textContent = 'Processing...';
+
+            document.getElementById('pdfFile').disabled = true;
+            dropZone.classList.add('disabled-drop');
+
             showStatusMessage('Uploading files...', 'success');
 
             let allSuccess = true;
@@ -543,6 +580,12 @@ window.handleFileSelect = function(input) {
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Process URL Content';
+                document.getElementById('pdfFile').disabled = false;
+                dropZone.classList.remove('disabled-drop');
+
+                // Clear selection
+                document.getElementById('pdfFile').value = '';
+                document.getElementById('fileName').innerHTML = '';
             }
         });
             
@@ -581,6 +624,18 @@ window.handleFileSelect = function(input) {
                 // Redirect to login page
                 window.location.href = "login_page.html";
             }
+        }
+
+        function removeFile(index) {
+            const input = document.getElementById('pdfFile');
+            const dataTransfer = new DataTransfer();
+        
+            Array.from(input.files).forEach((file, i) => {
+                if (i !== index) dataTransfer.items.add(file);
+            });
+        
+            input.files = dataTransfer.files;
+            handleFileSelect(input);  // refresh display
         }
 
         // Initialize user info
