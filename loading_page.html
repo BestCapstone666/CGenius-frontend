@@ -224,7 +224,6 @@
     const progressBar = document.getElementById('progressBar');
     const jobId = new URLSearchParams(window.location.search).get("job_id");
 
-    // Friendly phrases for each status
     const statusMap = {
         "Received file": { main: "Receiving your document", sub: "Hold tight, we're getting started..." },
         "Uploading files": { main: "Uploading files", sub: "Transferring data securely..." },
@@ -247,8 +246,20 @@
     }
 
     function updateStatusFromBackend() {
+        if (!jobId) {
+            statusElement.textContent = "Missing job ID!";
+            subStatusElement.textContent = "Redirecting...";
+            setTimeout(() => {
+                window.location.href = "main_page.html";
+            }, 2000);
+            return;
+        }
+
         fetch(`https://cgenius-docker.onrender.com/status/${jobId}`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error("Status endpoint not found");
+                return res.json();
+            })
             .then(data => {
                 const rawStatus = data.status;
                 const statusObj = statusMap[rawStatus] || { main: rawStatus, sub: "Please wait..." };
@@ -256,7 +267,6 @@
                 statusElement.innerHTML = statusObj.main + '<span class="dots"></span>';
                 subStatusElement.textContent = statusObj.sub;
 
-                // Accelerate progress on important stages
                 if (["Extracting metrics", "Validating results"].includes(rawStatus)) {
                     progress = Math.max(progress, 80);
                 }
@@ -271,16 +281,16 @@
                 }
             })
             .catch(err => {
-                statusElement.textContent = "Error retrieving status.";
-                subStatusElement.textContent = "Check your connection or try again.";
                 console.error("Polling error:", err);
+                statusElement.textContent = "❌ Error retrieving status";
+                subStatusElement.textContent = "Please try again later.";
             });
     }
 
-    // Run!
+    // 🚀 Run on load
     startProgressBar();
-    updateStatusFromBackend(); // initial call
-    setInterval(updateStatusFromBackend, 2000);
+    updateStatusFromBackend(); // First call
+    setInterval(updateStatusFromBackend, 2000); // Poll every 2s
 </script>
 </body>
 </html>

@@ -481,6 +481,8 @@
 
             let allSuccess = true;
 
+            let redirected = false;
+
             for (const file of files) {
                 const formData = new FormData();
                 formData.append('file', file);
@@ -494,21 +496,26 @@
 
                     const result = await response.json();
 
-                    if (response.ok && result && !result.error) {
-                        // ✅ Move redirect HERE (only once, ideally for first file)
-                        const jobId = result.job_id;
-                        window.location.href = `loading_page.html?job_id=${jobId}`;
+                    if (response.ok && result.job_id) {
+                        console.log("✅ Job ID received:", result.job_id);
+                        showStatusMessage(`✅ ${file.name} uploaded successfully!`, 'success');
 
-                        showStatusMessage(`✅ ${file.name} uploaded successfully.`, 'success');
-                    } else {
-                        const errorMsg = result?.error || 'Upload failed with unknown error.';
-                        showStatusMessage(`❌ Upload failed for ${file.name}: ${errorMsg}`, 'error');
+                        // Wait 2 seconds before redirecting
+                        setTimeout(() => {
+                            showStatusMessage("📦 Uploading file and initializing extraction...", "success");
+                            window.open(`loading_page.html?job_id=${result.job_id}`, '_blank');
+                        }, 2000);
+
+                        return; // stop uploading the rest
+                    
+                        } else {
+                            const errorMsg = result?.error || 'Upload failed';
+                            showStatusMessage(`❌ Upload failed: ${errorMsg}`, 'error');
                     }
 
-                } catch (error) {
-                    allSuccess = false;
-                    console.error('Upload error:', error);
-                    showStatusMessage(`❌ Upload error for ${file.name}: ${error.message}`, 'error');
+                } catch (err) {
+                    showStatusMessage(`❌ Upload error: ${err.message}`, 'error');
+                    console.error("Upload exception:", err);
                 }
             }
 
