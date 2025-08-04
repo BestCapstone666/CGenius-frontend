@@ -553,6 +553,10 @@
     .then(data => {
       console.log("✅ Table data from backend:", data);
 
+      if (!Array.isArray(data)) {
+        throw new Error("Backend did not return an array");
+      }
+
       sampleData = data.map(row => ({
         id: row.uuid,
         company: row.company_name,
