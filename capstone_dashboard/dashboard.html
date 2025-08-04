@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Governance Dashboard</title>
+    <link rel="stylesheet" href="design.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.26.0/plotly.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <!-- Toggle Button -->
+    <button id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+    
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div class="sidebar-content">
+            <h3>Dashboard Filters</h3>
+            
+            <div class="filter-group">
+                <label>Select Companies</label>
+                <div class="dropdown-container">
+                    <div class="bulk-actions">
+                        <button id="select-all-btn" class="bulk-action-btn">Select All</button>
+                        <button id="clear-all-btn" class="bulk-action-btn">Clear All</button>
+                    </div>
+                    <div class="company-tags-container" id="company-tags-container">
+                        <!-- Selected company tags will appear here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <label>Select Year Range</label>
+                <div class="year-range-container">
+                    <div class="year-display">
+                        <span id="year-min-display"></span>
+                        <span id="year-max-display"></span>
+                    </div>
+                    <div class="range-slider-container">
+                        <input type="range" id="year-min" class="range-slider" step="1">
+                        <input type="range" id="year-max" class="range-slider" step="1">
+                    </div>
+                    <div class="year-marks">
+                        <span id="year-mark-min"></span>
+                        <span id="year-mark-max"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="dashboard-container">
+        <!-- Main Content Area -->
+        <div id="main-content">
+            <!-- Header Section -->
+            <div class="header-section">
+                <h1>Corporate Governance Dashboard</h1>
+                <div class="header-buttons">
+                    <button id="download-dashboard-btn" class="header-btn">📊 Download Dashboard</button>
+                    <button id="download-csv-btn" class="header-btn">📋 Download Data CSV</button>
+                </div>
+            </div>
+        
+            <!-- Key Metrics Section -->
+            <div class="metrics-section">
+                <h3>Key Metrics</h3>
+                <div class="filter-group">
+                    <label for="metrics-company-dropdown">Select Company for Metrics:</label>
+                    <select id="metrics-company-dropdown">
+                        <!-- Options will be populated dynamically from data -->
+                    </select>
+                </div>
+                <div class="selected-year-display">
+                    <label>Selected Year: <span id="selected-year-range"></span></label>
+                </div>
+                <div id="metrics-cards"></div>
+            </div>
+            
+            <!-- Charts Section - 2x2 Grid -->
+            <div class="charts-container">
+                <!-- First Row of Charts -->
+                <div class="chart-row">
+                    <div class="chart-container gender-chart">
+                        <div class="chart-header">
+                            <h4>Board Gender Composition</h4>
+                            <div class="chart-actions">
+                                <button class="enlarge-chart-btn" onclick="enlargeChart('gender-chart', 'Board Gender Composition')">🔍</button>
+                                <button class="download-chart-btn" onclick="downloadChart('gender-chart', 'Board_Gender_Composition')">📥</button>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <div id="gender-chart"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container independence-chart">
+                        <div class="chart-header">
+                            <h4>Board Independence</h4>
+                            <div class="chart-actions">
+                                <button class="enlarge-chart-btn" onclick="enlargeChart('independence-chart', 'Board Independence')">🔍</button>
+                                <button class="download-chart-btn" onclick="downloadChart('independence-chart', 'Board_Independence')">📥</button>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <div id="independence-chart"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Second Row of Charts -->
+                <div class="chart-row">
+                    <div class="chart-container meetings-chart">
+                        <div class="chart-header">
+                            <h4>Board Meeting Frequency</h4>
+                            <div class="chart-actions">
+                                <button class="enlarge-chart-btn" onclick="enlargeChart('meetings-chart', 'Board Meeting Frequency')">🔍</button>
+                                <button class="download-chart-btn" onclick="downloadChart('meetings-chart', 'Board_Meeting_Frequency')">📥</button>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <div id="meetings-chart"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container audit-chart">
+                        <div class="chart-header">
+                            <h4>Audit Committee</h4>
+                            <div class="chart-actions">
+                                <button class="enlarge-chart-btn" onclick="enlargeChart('audit-chart', 'Audit Committee')">🔍</button>
+                                <button class="download-chart-btn" onclick="downloadChart('audit-chart', 'Audit_Committee')">📥</button>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <div id="audit-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Insights Section -->
+            <div class="insights-section">
+                <h3>Governance Insights</h3>
+                <div class="insights-wrapper">
+                    <div id="insights-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Enlargement Modal -->
+    <div id="chart-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-chart-title"></h3>
+                <span class="close-modal" onclick="closeChartModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="enlarged-chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load data first, then main JavaScript -->
+    <script src="data.js" type="module"></script>
+    <script src="javascript.js"></script>
+</body>
+</html>

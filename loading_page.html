@@ -280,7 +280,7 @@
         <div class="user-info">
             <button class="table-btn" onclick="window.open('main_page.html', '_blank')">Upload Report</button>
             <button class="dashboard-btn" 
-                onclick="window.open('https://cgenius-dashboard.onrender.com/?user_id=' + localStorage.getItem('user_id'), '_blank')">
+                onclick="window.open('capstone_dashboard/dashboard.html?user_id=' + localStorage.getItem('user_id'), '_blank')">
                 View Dashboard
             </button>
             <button class="logout-btn" onclick="logout()">Logout</button>
@@ -368,7 +368,7 @@
                     progressBar.style.width = "100%";
                     setTimeout(() => {
                         const userId = localStorage.getItem("user_id") || "guest";
-                        window.location.href = `table_page.html?user_id=${userId}`;
+                        window.location.href = `capstone_dashboard/dashboard.html?user_id=${userId}`;
                     }, 2000);
                 }
             })
