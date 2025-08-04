@@ -12,7 +12,7 @@ async function fetchCGData() {
     const { data: adminRows } = await supabase
       .from("admin_table")
       .select("*")
-      .eq("admins", userId);
+      .eq("user_id", userId);
 
     const isAdmin = adminRows && adminRows.length > 0;
 
