@@ -8,19 +8,6 @@ let minYear = 0;
 let maxYear = 0;
 let dataset = [];
 
-function initDashboard(data) {
-  // 👉 This is where you:
-  // - Populate dropdowns
-  // - Init filters
-  // - Render metrics
-  // - Draw charts using Plotly
-  // You can split into more helper functions like:
-  //   populateCompanies(data)
-  //   setupYearSlider(data)
-  //   drawGenderChart(data)
-  //   etc.
-
-
 // ==================== DATA PROCESSING ====================
 function processData() {
     // Convert to array of objects and calculate derived metrics
@@ -58,6 +45,34 @@ function initializeDataDrivenVariables() {
     
     console.log('Unique companies:', uniqueCompanies);
     console.log('Year range:', minYear, '-', maxYear);
+}
+
+
+
+function initDashboard(data) {
+  console.log("🧠 initDashboard triggered with data:", data);
+
+  const formattedData = {
+    'COMPANY NAME': data.map(d => d.company_name),
+    'YEAR': data.map(d => d.year),
+    'Number of Board Member': data.map(d => d.num_board),
+    'No of Independent Directors': data.map(d => d.num_independent),
+    'No of Male Director': data.map(d => d.num_male),
+    'No of Female Director': data.map(d => d.num_female),
+    'No of Board Meeting': data.map(d => d.num_board_meeting),
+    'Number of Audit Committee': data.map(d => d.num_audit),
+    'No of Audit Committee Meeting': data.map(d => d.num_audit_meeting),
+  };
+
+    window.data = formattedData;
+
+    processData();
+    initializeDataDrivenVariables();
+    populateFilters();
+    setupEventListeners();
+    updateDashboard();
+
+  console.log("✅ Dashboard fully initialized");
 }
 
 // ==================== POPULATE FILTERS ====================
@@ -313,11 +328,6 @@ function downloadCSV() {
 }
 
 // ==================== SIDEBAR FUNCTIONALITY ====================
-function toggleSidebar() {
-  const sidebar = document.querySelector('.sidebar');
-  sidebar.classList.toggle('active');
-}
-
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('main-content');
@@ -1136,42 +1146,3 @@ function setupEventListeners() {
     yearMaxSlider.addEventListener('input', updateYearRange);
 }
 
-// ==================== INITIALIZATION ====================
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, starting initialization...');
-    
-    // Check if data is loaded
-    if (typeof data === 'undefined') {
-        console.error('Data not loaded! Make sure data.js is included before javascript.js');
-        return;
-    }
-    
-    // Process the raw data
-    processData();
-    
-    // Initialize data-driven variables
-    initializeDataDrivenVariables();
-    
-    // Populate filters based on data
-    populateFilters();
-    
-    // Setup event listeners
-    setupEventListeners();
-    
-    // Update dashboard with initial data
-    updateDashboard();
-    
-    // Make plots responsive
-    window.addEventListener('resize', function() {
-        if (selectedCompanies.length > 0) {
-            Plotly.Plots.resize('gender-chart');
-            Plotly.Plots.resize('independence-chart');
-            Plotly.Plots.resize('meetings-chart');
-            Plotly.Plots.resize('audit-chart');
-        }
-    });
-    
-    console.log('Dashboard initialization complete!');
-});
-
-}
