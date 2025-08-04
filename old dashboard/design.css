@@ -6,90 +6,17 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Arial, sans-serif;
     position: relative;
     overflow-x: hidden;
     background: white;
 }
 
-/* cgenius header section - FIXED POSITION */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: white;
-    padding: 20px 30px;
-    border-radius: 0 0 15px 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1002; /* Higher than sidebar */
-    height: 90px; /* Fixed height for consistency */
-}
-
-.logo {
-    height: 50px;
-    margin-right: 15px;
-    vertical-align: middle;
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.header h1 {
-    color: #333;
-    font-weight: 300;
-    font-size: 1.8rem;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.table-btn {
-    background: #7ac636;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.table-btn:hover {
-    background: #528724;
-    transform: translateY(-2px);
-}
-
-.logout-btn {
-    background: #ff6b6b;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.logout-btn:hover {
-    background: #ee5a5a;
-    transform: translateY(-2px);
-}
-
-/* Toggle Button - POSITIONED UNDER HEADER */
+/* Toggle Button */
 #sidebar-toggle {
     position: fixed;
-    top: 110px; /* Position under the fixed header */
-    left: 15px;
+    top: 20px;
+    left: 20px;
     z-index: 1001;
     background: linear-gradient(135deg, #6db300 0%, #519200 100%);
     color: white;
@@ -107,13 +34,13 @@ body {
     transform: scale(1.1);
 }
 
-/* Sidebar - POSITIONED UNDER HEADER */
+/* Sidebar */
 #sidebar {
     position: fixed;
-    top: 90px; /* Start right after the header */
+    top: 0;
     left: 0;
     width: 300px;
-    height: calc(100vh - 90px); /* Full height minus header height */
+    height: 100vh;
     background: linear-gradient(135deg, #f8fafa 0%, #e6e9ec 100%);
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
     z-index: 1000;
@@ -339,18 +266,17 @@ body {
     color: #666;
 }
 
-/* Main Content Area - ADJUSTED FOR FIXED HEADER */
+/* Main Content Area */
 #main-content {
     margin-left: 320px; /* Leave space for sidebar */
-    margin-top: 90px; /* Leave space for fixed header */
     background: white;
-    min-height: calc(100vh - 90px);
+    min-height: 100vh;
     padding: 20px;
     transition: margin-left 0.3s ease;
 }
 
 #main-content.sidebar-collapsed {
-    margin-left: 50px;
+    margin-left: 20px;
 }
 
 /* Header Section */
@@ -549,19 +475,19 @@ body {
 }
 
 .gender-chart {
-    border: 3px solid #e74c3c;
+    border: 3px solid #FFD700;
 }
 
 .independence-chart {
-    border: 3px solid #2ecc71;
+    border: 3px solid #FF69B4;
 }
 
 .meetings-chart {
-    border: 3px solid #f39c12;
+    border: 3px solid #32CD32;
 }
 
 .audit-chart {
-    border: 3px solid #9b59b6;
+    border: 3px solid #87CEEB;
 }
 
 /* Insights Section - HORIZONTAL LAYOUT */
@@ -654,7 +580,7 @@ body {
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     flex-shrink: 0;
     min-width: 280px; /* Ensure minimum width for each card */
-    max-width: 400px; /* Increased max width to accommodate full company names */
+    max-width: 320px; /* Maximum width to prevent cards from being too wide */
 }
 
 .insight-card h4 {
@@ -663,7 +589,6 @@ body {
     margin-bottom: 15px;
     font-size: 0.95rem;
     line-height: 1.2;
-    word-wrap: break-word; /* Allow long company names to wrap */
 }
 
 .insight-item {
@@ -812,10 +737,6 @@ body {
     
     #sidebar {
         transform: translateX(-300px);
-    }
-    
-    #sidebar-toggle {
-        top: 110px; /* Keep consistent spacing under header */
     }
     
     .header-section h1 {

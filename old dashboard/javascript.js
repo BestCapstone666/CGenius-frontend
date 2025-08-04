@@ -16,6 +16,7 @@ function processData() {
         const row = {};
         for (const [key, values] of Object.entries(data)) {
             row[key] = values[i];
+        if (!row['YEAR'] || !row['COMPANY NAME']) continue;
         }
         
         // Calculate derived metrics
@@ -45,6 +46,34 @@ function initializeDataDrivenVariables() {
     
     console.log('Unique companies:', uniqueCompanies);
     console.log('Year range:', minYear, '-', maxYear);
+}
+
+
+
+function initDashboard(data) {
+  console.log("🧠 initDashboard triggered with data:", data);
+
+  const formattedData = {
+    'COMPANY NAME': data.map(d => d.company_name),
+    'YEAR': data.map(d => d.year),
+    'Number of Board Member': data.map(d => d.num_board),
+    'No of Independent Directors': data.map(d => d.num_independent),
+    'No of Male Director': data.map(d => d.num_male),
+    'No of Female Director': data.map(d => d.num_female),
+    'No of Board Meeting': data.map(d => d.num_board_meeting),
+    'Number of Audit Committee': data.map(d => d.num_audit),
+    'No of Audit Committee Meeting': data.map(d => d.num_audit_meeting),
+  };
+
+    window.data = formattedData;
+
+    processData();
+    initializeDataDrivenVariables();
+    populateFilters();
+    setupEventListeners();
+    updateDashboard();
+
+  console.log("✅ Dashboard fully initialized");
 }
 
 // ==================== POPULATE FILTERS ====================
@@ -159,169 +188,32 @@ function truncateText(text, maxLength) {
 // ==================== DOWNLOAD FUNCTIONS ====================
 function downloadChart(chartId, filename) {
     const plotElement = document.getElementById(chartId);
+    
+    // Get the current plot
     const gd = plotElement;
+    
+    // Create a layout specifically for download with company names
     const originalLayout = gd.layout;
-    
-    // Get the chart title from the chart header
-    const chartContainer = plotElement.closest('.chart-container');
-    const chartTitle = chartContainer.querySelector('.chart-header h4').textContent;
-    
-    // Create temporary container that mimics the enlarged modal
-    const tempContainer = document.createElement('div');
-    tempContainer.style.width = '1200px';
-    tempContainer.style.height = '800px';
-    tempContainer.style.position = 'absolute';
-    tempContainer.style.left = '-10000px';
-    tempContainer.style.backgroundColor = 'white';
-    tempContainer.style.padding = '20px';
-    tempContainer.style.boxSizing = 'border-box'; // Important for proper sizing
-    document.body.appendChild(tempContainer);
-    
-    // Create title element with better styling
-    const titleElement = document.createElement('h2');
-    titleElement.textContent = chartTitle;
-    titleElement.style.textAlign = 'center';
-    titleElement.style.margin = '0 0 30px 0'; // Increased bottom margin
-    titleElement.style.color = '#333';
-    titleElement.style.fontSize = '28px'; // Slightly larger
-    titleElement.style.fontFamily = 'Arial, sans-serif';
-    titleElement.style.fontWeight = 'bold';
-    titleElement.style.lineHeight = '1.2';
-    tempContainer.appendChild(titleElement);
-    
-    // Create chart container within temp container
-    const chartDiv = document.createElement('div');
-    chartDiv.style.width = '100%';
-    chartDiv.style.height = 'calc(100% - 80px)'; // More space for title
-    chartDiv.style.boxSizing = 'border-box';
-    tempContainer.appendChild(chartDiv);
-    
-    // Enhanced layout with better spacing and positioning
-    const enlargedLayout = {
+    const downloadLayout = {
         ...originalLayout,
-        width: 1160,  // Fixed width for consistent download
-        height: 700,  // Slightly reduced to accommodate title
-        
-        // Enhanced title positioning (this will be the chart's internal title if any)
-        title: {
-            ...originalLayout.title,
-            font: {
-                size: 20,
-                color: '#333',
-                family: 'Arial, sans-serif'
-            },
-            y: 0.95 // Position near top
-        },
-        
-        // Enhanced annotations for better visibility
+        plot_bgcolor: 'white',
+        paper_bgcolor: 'white',
+        font: { ...originalLayout.font, color: 'black' },
+        // Ensure annotations (company names) are preserved and visible
         annotations: originalLayout.annotations ? originalLayout.annotations.map(ann => ({
             ...ann,
-            font: { 
-                ...ann.font, 
-                size: Math.max(ann.font?.size || 9, 18), // Larger font
-                color: '#333', // Darker color
-                family: 'Arial, sans-serif'
-            },
-            bgcolor: 'rgba(255, 255, 255, 0.9)'
-        })) : [],
-        
-        // Better margins to prevent text cutoff
-        margin: {
-            l: 80,  // More space for y-axis labels
-            r: 60,  // Space for any right-side labels
-            t: 60,  // More top space
-            b: 150  // Much more bottom space for company names
-        },
-        
-        // Enhanced x-axis for company names
-        xaxis: {
-            ...originalLayout.xaxis,
-            tickangle: -45, // Rotate labels for better readability
-            tickfont: {
-                size: 14,
-                color: '#333',
-                family: 'Arial, sans-serif'
-            },
-            title: {
-                ...originalLayout.xaxis?.title,
-                font: {
-                    size: 16,
-                    color: '#333',
-                    family: 'Arial, sans-serif'
-                }
-            }
-        },
-        
-        // Enhanced y-axis
-        yaxis: {
-            ...originalLayout.yaxis,
-            tickfont: {
-                size: 14,
-                color: '#333',
-                family: 'Arial, sans-serif'
-            },
-            title: {
-                ...originalLayout.yaxis?.title,
-                font: {
-                    size: 16,
-                    color: '#333',
-                    family: 'Arial, sans-serif'
-                }
-            }
-        },
-        
-        // Enhanced legend
-        legend: {
-            ...originalLayout.legend,
-            font: {
-                size: 14,
-                color: '#333',
-                family: 'Arial, sans-serif'
-            },
-            bgcolor: 'rgba(255, 255, 255, 0.9)'
-        }
+            font: { ...ann.font, color: 'black', size: Math.max(ann.font.size, 12) }
+        })) : []
     };
     
-    // Create the plot with enhanced configuration
-    Plotly.newPlot(chartDiv, gd.data, enlargedLayout, { 
-        displayModeBar: false, // Hide display bar for cleaner download
-        responsive: false // Ensure fixed sizing
-    }).then(() => {
-        // Longer delay to ensure plot is fully rendered with all text
-        setTimeout(() => {
-            // Use html2canvas with enhanced options
-            html2canvas(tempContainer, {
-                backgroundColor: 'white',
-                scale: 2, // High resolution
-                useCORS: true,
-                allowTaint: true,
-                width: tempContainer.offsetWidth,
-                height: tempContainer.offsetHeight,
-                scrollX: 0,
-                scrollY: 0,
-                windowWidth: tempContainer.offsetWidth,
-                windowHeight: tempContainer.offsetHeight,
-                // Additional options for better text rendering
-                letterRendering: true,
-                logging: false // Set to true for debugging
-            }).then(canvas => {
-                // Create download link
-                const link = document.createElement('a');
-                link.download = filename + '.png';
-                link.href = canvas.toDataURL('image/png', 1.0); // Maximum quality
-                link.click();
-                
-                // Cleanup
-                document.body.removeChild(tempContainer);
-            }).catch(error => {
-                console.error('Download failed:', error);
-                alert('Download failed. Please try again.');
-                document.body.removeChild(tempContainer);
-            });
-        }, 1000); // Increased delay for better rendering
-    }).catch(error => {
-        console.error('Plot creation failed:', error);
-        document.body.removeChild(tempContainer);
+    // Download the plot with enhanced layout
+    Plotly.downloadImage(gd, {
+        format: 'png',
+        width: Math.max(1400, getChartWidth()),
+        height: 700,
+        filename: filename,
+        // Use the download layout
+        layout: downloadLayout
     });
 }
 
@@ -336,37 +228,27 @@ function enlargeChart(chartId, chartTitle) {
     // Get the original chart data and layout
     const originalChart = document.getElementById(chartId);
     const data = originalChart.data;
-    const originalLayout = originalChart.layout;
-    
-    // Enhanced layout for enlarged view
-    const enlargedLayout = {
-        ...originalLayout,
+    const layout = {
+        ...originalChart.layout,
         width: null,
         height: null,
         autosize: true,
-        // Enhanced annotations for better visibility in enlarged view
-        annotations: originalLayout.annotations ? originalLayout.annotations.map(ann => ({
+        // Ensure annotations (company names) are preserved in enlarged view
+        annotations: originalChart.layout.annotations
+        ? originalChart.layout.annotations.map(ann => ({
             ...ann,
-            font: { 
-                ...ann.font, 
-                size: Math.max(ann.font.size || 9, 16),
-                color: 'black',
-                family: 'Arial, sans-serif'
-            },
-            bgcolor: 'rgba(255, 255, 255, 0.9)'
-        })) : [],
-        // Ensure adequate bottom margin for company names
-        margin: {
-            ...originalLayout.margin,
-            b: Math.max(originalLayout.margin?.b || 80, 120),
-            l: Math.max(originalLayout.margin?.l || 50, 60),
-            r: Math.max(originalLayout.margin?.r || 50, 60),
-            t: Math.max(originalLayout.margin?.t || 20, 40)
-        }
+            font: { ...ann.font, size: Math.max(ann.font.size || 12, 14) }
+            }))
+        : []
+        
     };
+
+    if (layout.annotations && layout.annotations.length > 0) {
+        layout.annotations[0].text = layout.annotations[0].text || "Chart Title";
+    }    
     
-    // Create enlarged chart with enhanced layout
-    Plotly.newPlot(enlargedChartDiv, data, enlargedLayout, { responsive: true });
+    // Create enlarged chart
+    Plotly.newPlot(enlargedChartDiv, data, layout, { responsive: true });
 }
 
 function closeChartModal() {
@@ -490,33 +372,6 @@ function getChartWidth() {
     return Math.max(minWidth, companies * widthPerCompany);
 }
 
-// Helper function to create enhanced annotations for company names
-function createCompanyAnnotations(companyBoundaries, yPosition = -0.20) {
-    return companyBoundaries.map(({ company, start, end }) => {
-        const centerPos = (start + end) / 2;
-        const barWidth = end - start + 1;
-        const maxChars = Math.max(8, Math.floor(barWidth * 8));
-        const displayName = truncateText(company, maxChars);
-        
-        return {
-            x: centerPos,
-            y: yPosition,
-            text: `<b>${displayName}</b>`,
-            showarrow: false,
-            font: { 
-                size: 12, 
-                color: 'black', 
-                family: 'Arial, sans-serif' 
-            },
-            xref: 'x',
-            yref: 'paper',
-            xanchor: 'center',
-            yanchor: 'top',
-            bgcolor: 'rgba(255, 255, 255, 0.8)'
-        };
-    });
-}
-
 function createGenderChart(filteredData) {
     const companies = [...new Set(filteredData.map(row => row['COMPANY NAME']))];
     
@@ -537,7 +392,7 @@ function createGenderChart(filteredData) {
         const companyStart = position;
         
         companyData.forEach(row => {
-            allXLabels.push(row['YEAR'].toString());
+            allXLabels.push(row['YEAR'] ?? '').toString();
             maleValues.push(row['No of Male Director']);
             femaleValues.push(row['No of Female Director']);
             xPositions.push(position);
@@ -622,18 +477,37 @@ function createGenderChart(filteredData) {
         },
         height: 350,
         width: chartWidth,
-        margin: { b: 100, t: 20, l: 50, r: 50 }, // Increased bottom margin
-        annotations: createCompanyAnnotations(companyBoundaries)
+        margin: { b: 80, t: 20, l: 50, r: 50 },
+        annotations: []
     };
+    
+    // Add company name annotations with improved styling
+    companyBoundaries.forEach(({ company, start, end }) => {
+        const centerPos = (start + end) / 2;
+        const barWidth = end - start + 1;
+        const maxChars = Math.max(8, Math.floor(barWidth * 8));
+        const displayName = truncateText(company, maxChars);
+        
+        layout.annotations.push({
+            x: centerPos,
+            y: -0.25,
+            text: `<b>${displayName}</b>`,
+            showarrow: false,
+            font: { size: 11, color: 'black', family: 'Arial, sans-serif' },
+            xref: 'x',
+            yref: 'paper',
+            xanchor: 'center'
+        });
+    });
     
     const config = { 
         responsive: true,
         toImageButtonOptions: {
             format: 'png',
             filename: 'Board_Gender_Composition',
-            height: 800,
+            height: 700,
             width: 1400,
-            scale: 2
+            scale: 1
         }
     };
     
@@ -660,7 +534,7 @@ function createIndependenceChart(filteredData) {
         const companyStart = position;
         
         companyData.forEach(row => {
-            allXLabels.push(row['YEAR'].toString());
+            allXLabels.push(row['YEAR'] ?? '').toString();
             independentValues.push(row['No of Independent Directors']);
             dependentValues.push(row['Number of Board Member'] - row['No of Independent Directors']);
             xPositions.push(position);
@@ -745,24 +619,42 @@ function createIndependenceChart(filteredData) {
         },
         height: 350,
         width: chartWidth,
-        margin: { b: 100, t: 20, l: 50, r: 50 }, // Increased bottom margin
-        annotations: createCompanyAnnotations(companyBoundaries)
+        margin: { b: 80, t: 20, l: 50, r: 50 },
+        annotations: []
     };
 
+    // Add company name annotations with improved styling
+    companyBoundaries.forEach(({ company, start, end }) => {
+        const centerPos = (start + end) / 2;
+        const barWidth = end - start + 1;
+        const maxChars = Math.max(8, Math.floor(barWidth * 8));
+        const displayName = truncateText(company, maxChars);
+        
+        layout.annotations.push({
+            x: centerPos,
+            y: -0.25,
+            text: `<b>${displayName}</b>`,
+            showarrow: false,
+            font: { size: 11, color: 'black', family: 'Arial, sans-serif' },
+            xref: 'x',
+            yref: 'paper',
+            xanchor: 'center'
+        });
+    });
+    
     const config = { 
         responsive: true,
         toImageButtonOptions: {
             format: 'png',
             filename: 'Board_Independence',
-            height: 800,
+            height: 700,
             width: 1400,
-            scale: 2
+            scale: 1
         }
     };
     
     Plotly.newPlot('independence-chart', traces, layout, config);
 }
-
 // Generate unique color per company
 function generateColorMap(labels) {
     const colorMap = {};
@@ -835,9 +727,9 @@ function createMeetingsChart(filteredData) {
         toImageButtonOptions: {
             format: 'png',
             filename: 'Board_Meeting_Frequency',
-            height: 800,
+            height: 700,
             width: 1400,
-            scale: 2
+            scale: 1
         }
     };
     
@@ -864,7 +756,7 @@ function createAuditChart(filteredData) {
         const companyStart = position;
         
         companyData.forEach(row => {
-            allXLabels.push(row['YEAR'].toString());
+            allXLabels.push(row['YEAR'] ?? '').toString();
             membersValues.push(row['Number of Audit Committee']);
             meetingsValues.push(row['No of Audit Committee Meeting']);
             xPositions.push(position);
@@ -962,18 +854,37 @@ function createAuditChart(filteredData) {
         },
         height: 350,
         width: chartWidth,
-        margin: { b: 100, t: 20, l: 40, r: 40 }, // Increased bottom margin
-        annotations: createCompanyAnnotations(companyBoundaries)
+        margin: { b: 80, t: 20, l: 40, r: 40 },
+        annotations: []
     };
+    
+    // Add company name annotations with improved styling
+    companyBoundaries.forEach(({ company, start, end }) => {
+        const centerPos = (start + end) / 2;
+        const barWidth = end - start + 1;
+        const maxChars = Math.max(8, Math.floor(barWidth * 8));
+        const displayName = truncateText(company, maxChars);
+        
+        layout.annotations.push({
+            x: centerPos,
+            y: -0.25,
+            text: `<b>${displayName}</b>`,
+            showarrow: false,
+            font: { size: 11, color: 'black', family: 'Arial, sans-serif' },
+            xref: 'x',
+            yref: 'paper',
+            xanchor: 'center'
+        });
+    });
 
     const config = { 
         responsive: true,
         toImageButtonOptions: {
             format: 'png',
             filename: 'Audit_Committee',
-            height: 800,
+            height: 700,
             width: 1400,
-            scale: 2
+            scale: 1
         }
     };
     
@@ -987,7 +898,7 @@ function updateMetricsCards() {
     
     // Determine if we need "Avg" prefix
     const isMultipleYears = yearRange[0] !== yearRange[1];
-    const avgPrefix = isMultipleYears ? "Average " : "";
+    const avgPrefix = isMultipleYears ? "Avg " : "";
     
     const metrics = [
         {
@@ -1097,8 +1008,7 @@ function updateInsights() {
             cardClass = "insight-weak";
         }
         
-        // SHOW FULL COMPANY NAME - NO TRUNCATION
-        const displayName = row['COMPANY NAME']; // Use full name without truncation
+        const displayName = truncateText(row['COMPANY NAME'], 30);
         
         const card = document.createElement('div');
         card.className = `insight-card ${cardClass}`;
@@ -1244,40 +1154,3 @@ function setupEventListeners() {
     yearMaxSlider.addEventListener('input', updateYearRange);
 }
 
-// ==================== INITIALIZATION ====================
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, starting initialization...');
-    
-    // Check if data is loaded
-    if (typeof data === 'undefined') {
-        console.error('Data not loaded! Make sure data.js is included before javascript.js');
-        return;
-    }
-    
-    // Process the raw data
-    processData();
-    
-    // Initialize data-driven variables
-    initializeDataDrivenVariables();
-    
-    // Populate filters based on data
-    populateFilters();
-    
-    // Setup event listeners
-    setupEventListeners();
-    
-    // Update dashboard with initial data
-    updateDashboard();
-    
-    // Make plots responsive
-    window.addEventListener('resize', function() {
-        if (selectedCompanies.length > 0) {
-            Plotly.Plots.resize('gender-chart');
-            Plotly.Plots.resize('independence-chart');
-            Plotly.Plots.resize('meetings-chart');
-            Plotly.Plots.resize('audit-chart');
-        }
-    });
-    
-    console.log('Dashboard initialization complete!');
-});

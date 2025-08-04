@@ -1,35 +1,61 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+// ==================== DATA ====================
+// This is where you update your corporate governance data
+// Simply replace the values in each array with your new data
+// Make sure all arrays have the same length (same number of entries)
 
-const SUPABASE_URL = "https://fbhskyalsyeopiydyjhz.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZiaHNreWFsc3llb3BpeWR5amh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2NDI0ODAsImV4cCI6MjA2NjIxODQ4MH0.HmW6geKvj2rPSeaw-Bm2zLaHjgwkE6FwO2DVq3rbYOE";
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-const userId = localStorage.getItem("user_id");
-const userEmail = localStorage.getItem("user_email");
-
-async function fetchCGData() {
-  try {
-    const { data: adminRows } = await supabase
-      .from("admin_table")
-      .select("*")
-      .eq("user_id", userId);
-
-    const isAdmin = adminRows && adminRows.length > 0;
-
-    let query = supabase.from("cg_data").select("*");
-    if (!isAdmin) {
-      query = query.eq("user_id", userId);
-    }
-
-    const { data, error } = await query;
-
-    console.log("📊 Loaded data:", data);
-    initDashboard(data); // pass to chart logic in javascript.js
-
-  } catch (err) {
-    console.error("❌ Failed to fetch data:", err);
-    alert("Error loading dashboard data.");
-  }
-}
-
-document.addEventListener("DOMContentLoaded", fetchCGData);
+const data = {
+    'COMPANY NAME': [
+        'Tesco PLC', 'Tesco PLC', 'Tesco PLC', 'Tesco PLC', 'Tesco PLC',
+        'Airbus', 'Airbus', 'Airbus', 'Airbus', 'Airbus',
+        'Ryanair Group', 'Ryanair Group', 'Ryanair Group', 'Ryanair Group', 'Ryanair Group',
+        '7-11','KLUANG RUBBER COMPANY (MALAYA) BERHAD'
+    ],
+    'YEAR': [
+        2024, 2023, 2022, 2021, 2020, 
+        2024, 2023, 2022, 2021, 2020,
+        2024, 2023, 2022, 2021, 2020, 
+        2021, 2022
+    ],
+    'Number of Board Member': [
+        12, 13, 12, 14, 13, 
+        12, 12, 12, 12, 12, 
+        16, 13, 11, 10, 10, 
+        9, 10
+    ],
+    'No of Independent Directors': [
+        10, 9, 10, 11, 11, 
+        11, 11, 11, 11, 11, 
+        15, 12, 10, 9, 9, 
+        2, 5
+    ],
+    'No of Male Director': [
+        7, 8, 7, 9, 9, 
+        7, 8, 8, 8, 8, 
+        8, 8, 7, 6, 6, 
+        9, 8
+    ],
+    'No of Female Director': [
+        5, 5, 5, 5, 4, 
+        5, 4, 4, 4, 4, 
+        8, 5, 4, 4, 4, 
+        0, 2
+    ],
+    'No of Board Meeting': [
+        6, 6, 6, 5, 5, 
+        10, 9, 13, 10, 11, 
+        8, 8, 8, 23, 17, 
+        2, 5
+    ],
+    'Number of Audit Committee': [
+        3, 2, 1, 1, 2, 
+        5, 6, 5, 5, 5, 
+        3, 4, 4, 3, 3, 
+        6, 5
+    ],
+    'No of Audit Committee Meeting': [
+        5, 5, 4, 5, 6, 
+        6, 6, 5, 5, 5, 
+        5, 6, 9, 8, 6, 
+        5, 3
+    ]
+};

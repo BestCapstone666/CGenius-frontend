@@ -542,46 +542,36 @@
       return;
     }
 
-    const userId = user.id;
+    const userId = localStorage.getItem("user_id");
 
-    // ✅ check if admin
-    const { data: adminRows, error: adminError } = await supabaseClient
-      .from('admin_table')
-      .select('*')
-      .eq('admins', userId);
+    fetch(`https://cgenius-docker.onrender.com/get_table_data?user_id=${userId}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log("✅ Table data from backend:", data);
 
-    const isAdmin = adminRows && adminRows.length > 0;
+      sampleData = data.map(row => ({
+        id: row.uuid,
+        company: row.company_name,
+        year: row.year,
+        board: row.num_board,
+        independent: row.num_independent,
+        male: row.num_male,
+        female: row.num_female,
+        board_meeting: row.num_board_meeting,
+        audit: row.num_audit,
+        audit_meeting: row.num_audit_meeting
+      }));
 
-    let query = supabaseClient.from('cg_data').select('*');
-    if (!isAdmin) {
-      query = query.eq('user_id', userId);
-    }
-
-    const { data, error } = await query;
-    if (error) {
-      console.error('Error fetching data:', error);
-      return;
-    }
-
-    sampleData = data.map(row => ({
-      id: row.uuid,
-      company: row.company_name,
-      year: row.year,
-      board: row.num_board,
-      independent: row.num_independent,
-      male: row.num_male,
-      female: row.num_female,
-      board_meeting: row.num_board_meeting,
-      audit: row.num_audit,
-      audit_meeting: row.num_audit_meeting
-    }));
-
-    filteredData = [...sampleData];
-    renderTable();
-  }
+      filteredData = [...sampleData];
+      renderTable();
+    })
+    .catch(err => {
+      console.error("❌ Failed to load table data", err);
+    });
+}
 
     // Call it on page load:
-    loadData();
+loadData();
 
     function renderTable() {
         tableBody.innerHTML = "";
