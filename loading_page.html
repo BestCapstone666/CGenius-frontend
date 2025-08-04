@@ -375,7 +375,11 @@
             .catch(err => {
                 console.error("Polling error:", err);
                 statusElement.textContent = "❌ Error retrieving status";
-                subStatusElement.textContent = "Please try again later.";
+                subStatusElement.textContent = "Redirecting to upload page...";
+
+                setTimeout(() => {
+                    window.location.href = "main_page.html";
+                }, 3000);
             });
     }
 
