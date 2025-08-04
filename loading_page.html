@@ -363,7 +363,7 @@
                     progress = Math.max(progress, 80);
                 }
 
-                if (rawStatus === "Completed") {
+                if (rawStatus.startsWith("Completed") || rawStatus.includes("✅")) {
                     clearInterval(progressInterval);
                     progressBar.style.width = "100%";
                     setTimeout(() => {
