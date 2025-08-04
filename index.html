@@ -1,680 +1,700 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CGenius – Automate Corporate Governance Data System</title>
-  <style>
-    * {margin:0;padding:0;box-sizing:border-box;font-family:Roboto;}
-    body {line-height:1.6;color:#333;}
- 
-
-body, html {
-  margin: 0;
-  padding-top: 10px; 
-  width: 100%;
-  height: 100%;
-}
-
-
-    /* Header */
-header {
-  position: fixed;   
-  top: 0;
-  height:50px;
-  width: 100%;
-  background:#fff;
-  border-bottom:1px solid #eee;
-  z-index:999
-}
-.container {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  height:100%;
-  padding:0px 5%;
-  position:relative;
-}
-.right-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px; 
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-}
-.logo a {
-  display: inline-block;
-  text-decoration: none; 
-}
-.logo img {
-  height: 40px;     
-  width: auto;       
-  display: block;    
-}
-
-.cta-button1 {
-  background:#4CAF00;
-  color:#fff;
-  padding:6px 14px;
-  font-size:0.9rem;
-  border-radius:4px;
-  text-decoration:none;
-  font-weight:bold;
-  display:inline-block;
-  transition: background 0.3s ease; /* smooth transition */
-
-}
-
-.cta-button2 {
-  background:#4CAF00;
-  color:#fff;
-  padding:6px 14px;
-  font-size:0.9rem;
-  border-radius:4px;
-  text-decoration:none;
-  font-weight:bold;
-  display:inline-block;
-  transition: background 0.3s ease; /* smooth transition */
-
-}
-
-.cta-button1:hover,
-.cta-button2:hover {
-  background: #45a049;
-}
-
-.hamburger {
-  font-size:24px;
-  cursor:pointer;
-  margin-left:15px;
-}
-
-.nav-links {
-  display:none;
-  flex-direction:column;
-  position:absolute;
-  top:60px;
-  right:10px;
-  background:#fff;
-  padding:15px;
-  border-radius:8px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-  list-style:none;
-  width:180px;
-}
-.nav-links li {
-  margin:10px 0;
-}
-.nav-links li a {
-  text-decoration:none;
-  color:#333;
-  font-weight:500;
-}
-.nav-links li a:hover {
-  color:#4CAF00;
-}
-
-.nav-links.show {
-  display:flex;
-}
-
-    /* Hero */
-.hero-slider {
-            position: relative;
-            height: 100vh;
-            overflow: hidden;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Governance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .slide {
-            position: absolute;
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fafbfa;
+            color: #2c2c2c;
+            line-height: 1.2;
+            overflow-x: hidden;
+        }
+        
+            html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
+            right: 0;
+            z-index: 1000;
+            padding: 0.8vh 4vw;
+            border-bottom: 1px solid rgba(228, 228, 231, 0.3);
+            transition: all 0.3s ease;
+            height: 6vh;
+            min-height: 60px;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 90%;
+            margin: 0 auto;
             height: 100%;
+            overflow-x: hidden;
+            flex-wrap: wrap;
+
+        }
+
+        .logo {
             display: flex;
             align-items: center;
-            opacity: 0;
-            transform: translateX(100%);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 0.8vw;
+            transition: transform 0.3s ease;
+            cursor: pointer;
         }
 
-        .slide.active {
-            opacity: 1;
-            transform: translateX(0);
+        .logo:hover {
+            transform: scale(1.05);
         }
 
-        .slide.prev {
-            transform: translateX(-100%);
+        .logo img {
+            height: 40px;     
+            width: auto;       
+            display: block;    
         }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            width: 100%;
-            
-        }
-
-        .slide-content {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 4rem;
+        .nav-right {
+            display: flex;
             align-items: center;
-            height: 100%;
-            padding: 2rem 0;
+            gap: 0.8vw;
+        }
+     
+        .auth-buttons {
+            display: flex;
+            gap: 0.8vw;
+            align-items: center;
         }
 
-        .text-content {
-            z-index: 10;
-        }
-
-        .slide h1 {
-            font-size: 3rem;
-            font-weight: 300;
-            line-height: 1.2;
-            color: #1e293b;
-            margin-bottom: 2rem;
-        }
-
-        .slide h1 .highlight {
-            font-style: italic;
-            color: #3b82f6;
-        }
-
-        .slide p {
-            font-size: 1.2rem;
-            color: #64748b;
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
-            max-width: 500px;
-        }
-
-        .cta-button {
-            background: #10b981;
-            color: white;
-            padding: 1rem 2rem;
+        .btn-login, .btn-signup {
+            padding: 0.6vh 1.2vw;
             border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            border-radius: 0.4vw;
+            font-size: 0.85vw;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            text-align: center;
         }
 
-        .cta-button:hover {
-            background: #059669;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        .btn-login {
+            background: transparent;
+            color: #4CAF00;
+            border: 1px solid #4CAF00;
         }
 
-        .visual-content {
+        .btn-login:hover {
+            background: #1a3a1a;
+            color: white;
+        }
+
+        .btn-signup {
+            background: #4CAF00;
+            color: white;
+        }
+
+        .btn-signup:hover {
+            background: #1a3a1a;
+            transform: translateY(-1px);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 0.2vh;
+            padding: 0.8vh;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover {
+            transform: scale(1.1);
+        }
+
+        .hamburger span {
+            width: 2vw;
+            height: 0.25vh;
+            background: #2c2c2c;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(0.2vh, 0.2vh);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(0.2vh, -0.2vh);
+        }
+
+        .nav-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(228, 228, 231, 0.3);
+            border-radius: 1vw;
+            padding: 2vh 2vw;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            min-width: 15vw;
+            max-width: 90vw; /* or 100% */
+            overflow-x: auto;
+            box-sizing: border-box;
+            right: 2vw;
+        }
+
+        .nav-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            display: block;
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 1vh 0;
+            color: #2c2c2c;
+            text-decoration: none;
+            font-size: 1vw;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #2d5a2d;
+            padding-left: 1vw;
+        }
+
+        .nav-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 0 4vw;
+            margin-top: 6vh;
+            height: calc(100vh - 6vh);
+            min-height: calc(100vh - 60px);
             position: relative;
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #f1f5f9;
-            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
-            justify-content: center;
         }
 
-        .image-container {
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-2vh) rotate(180deg); }
+        }
+
+        .slider-container {
+            max-width: 90%;
+            margin: 0 auto;
             position: relative;
+            z-index: 1;
             width: 100%;
-            height: 100%;
-            display: flex;
+        }
+
+        .slider {
+            position: relative;
+            border-radius: 1vw;
+        }
+
+        .slide {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 4vw;
             align-items: center;
-            justify-content: center;
-            background: #e2e8f0;
+            min-height: 70vh;
+        }
+
+        .slide.active {
+            display: grid;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(2vw);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-content {
+            padding: 2vw;
+        }
+
+        .slide-title {
+            font-size: 3.5vw;
+            color: #1a1a1a;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 2vh;
+        }
+
+        .slide-title .highlight {
+            font-style: italic;
+            color: #3b82f6;
+        }
+
+        .slide-subtitle {
+            font-size: 1.2vw;
+            color: #64748b;
+            margin-bottom: 3vh;
+            line-height: 1.6;
+        }
+
+        .slide-cta {
+            background: #2d4a5a;
+            color: white;
+            padding: 1vh 2vw;
+            border: none;
+            border-radius: 0.6vw;
+            font-size: 1vw;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slide-cta:hover {
+            background: #1a3a4a;
+            transform: translateY(-1px);
         }
 
         .slide-image {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 20px;
+            height: 35vh;
+            background: linear-gradient(135deg, #e8f5e8, #d4e8d4);
+            border-radius: 1vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3vw;
+            position: relative;
+            overflow: hidden;
         }
 
-        .image-placeholder {
+        .slide-image img {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 600;
+            object-fit: cover;
+            border-radius: 1vw;
         }
 
-        .datarobot-header {
+        .slider-nav {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            color: white;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .blueprint-title {
-            color: #10b981;
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .diagram-flow {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            height: calc(100% - 4rem);
-            align-items: start;
-        }
-
-        .flow-column {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .flow-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .flow-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .flow-item .icon {
-            width: 32px;
-            height: 32px;
-            margin: 0 auto 0.5rem;
-            background: #10b981;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .flow-item .label {
-            color: white;
-            font-size: 0.8rem;
-            font-weight: 500;
-            line-height: 1.3;
-        }
-
-        .flow-item.nvidia {
-            background: rgba(118, 185, 0, 0.2);
-            border-color: #76b900;
-        }
-
-        .flow-item.nvidia .icon {
-            background: #76b900;
-        }
-
-        .connection-line {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.3);
-            height: 1px;
-            width: 50px;
             top: 50%;
-            right: -50px;
-            z-index: 1;
-        }
-
-        .connection-line::after {
-            content: '';
-            position: absolute;
-            right: -5px;
-            top: -3px;
-            width: 0;
-            height: 0;
-            border-left: 6px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid transparent;
-            border-bottom: 3px solid transparent;
-        }
-
-        .presenter {
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            width: 80px;
-            height: 80px;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23475569"/><circle cx="50" cy="40" r="12" fill="%23e2e8f0"/><path d="M30 80 Q50 70 70 80" stroke="%23e2e8f0" stroke-width="3" fill="none"/></svg>') center/cover;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .slide-indicators {
-            position: absolute;
-            bottom: 2rem;
-            left: 2rem;
-            display: flex;
-            gap: 0.5rem;
-            z-index: 1;
-        }
-
-        .indicator {
-            width: 40px;
-            height: 4px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 2px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .indicator.active {
-            background: #1e293b;
-        }
-
-        .nav-buttons {
-            position: absolute;
-            bottom: 2rem;
-            right: 2rem;
-            display: flex;
-            gap: 1rem;
-            z-index: 10;
-        }
-
-        .nav-button {
+            transform: translateY(-50%);
             background: rgba(255, 255, 255, 0.9);
             border: none;
-            width: 50px;
-            height: 50px;
+            width: 3vw;
+            height: 3vw;
             border-radius: 50%;
             cursor: pointer;
+            font-size: 1.2vw;
+            color: #2d4a5a;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .slider-nav:hover {
+            background: #1a3a4a;
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slider-prev {
+            left: -4vw;
+        }
+
+        .slider-next {
+            right: -4vw;
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 1vw;
+            margin-top: 3vh;
+        }
+
+        .dot {
+            width: 0.8vw;
+            height: 0.8vw;
+            border-radius: 50%;
+            background: rgba(45, 74, 90, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: #2d4a5a;
+            transform: scale(1.2);
+        }
+
+
+        /* About Section */
+        .about {
+            padding: 8vh 4vw;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-container {
+            max-width: 90%;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 3vw;
+            color: #1a1a1a;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 6vh;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4vw;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1vw;
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 35vh;
+            border-radius: 1.2vw;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            color: #1e293b;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 1.2vw;
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 8vh 4vw;
+            background: #f8fdf8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .problems-tag {
+            display: inline-block;
+            background: #e8f5e8;
+            color: #2d5a2d;
+            padding: 0.6vh 1.5vw;
+            border-radius: 1.5vw;
+            font-size: 0.9vw;
+            font-weight: 500;
+            margin-bottom: 2vh;
+            border: 1px solid #d4e8d4;
+        }
+
+         .problems-subtitle {
+            font-size: 1.2vw;
+            color: #6b7280;
+            max-width: 50%;
+            margin: 0 auto 6vh auto;
+            text-align: center;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3vw;
+            margin-top: 6vh;
+        }
+
+        .problem-card {
+            background: #ffffff;
+            border-radius: 1.2vw;
+            padding: 3vw;
+            box-shadow: 0 0.3vh 2vh rgba(0, 0, 0, 0.04);
+            border: 1px solid #f0f0f0;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-1vh) scale(1.02);
+            box-shadow: 0 2vh 4vh rgba(45, 90, 45, 0.15);
+            border-color: #d4e8d4;
+        }
+
+        .card-number {
+            position: absolute;
+            top: 1.8vh;
+            right: 1.8vw;
+            background: #f8fdf8;
+            color: #2d5a2d;
+            width: 2.4vw;
+            height: 2.4vw;
+            border-radius: 0.6vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1vw;
+            border: 1px solid #e8f5e8;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .problem-card:hover .card-number {
+            background: #2d5a2d;
+            color: white;
+            border-color: #2d5a2d;
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .problem-image {
+            width: 100%;
+            height: 15vh;
+            border-radius: 0.8vw;
+            margin-bottom: 2vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .nav-button:hover {
+        .problem-img {
+            width: 38%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.9vw;
+            }
+
+        .problem-card:hover .problem-image {
+            transform: scale(1.05);
+        }
+
+        .problem-title {
+            font-size: 1.3vw;
+            color: #1a1a1a;
+            font-weight: 600;
+            margin-bottom: 1vh;
+        }
+
+        .problem-text {
+            font-size: 1vw;
+            color: #6b7280;
+        }
+
+        /* Solutions Section */
+        .solutions {
+            padding: 8vh 4vw;
             background: white;
-            transform: scale(1.1);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
-@media (max-width: 1024px) {
-  .slide-content {
-    grid-template-columns: 1fr;  /* stack content */
-    gap: 2rem;
-    text-align: center;
-  }
+        .solutions-tag {
+            display: inline-block;
+            background: #e8f5e8;
+            color: #2d5a2d;
+            padding: 0.6vh 1.5vw;
+            border-radius: 1.5vw;
+            font-size: 0.9vw;
+            font-weight: 500;
+            margin-bottom: 2vh;
+            border: 1px solid #d4e8d4;
+        }
 
-  .slide h1 {
-    font-size: 2.2rem;           /* slightly smaller */
-    line-height: 1.3;
-    word-break: break-word;      /* prevent overflow */
-    margin-bottom: 1rem;
-  }
+        .solutions-subtitle {
+            font-size: 1.2vw;
+            color: #6b7280;
+            max-width: 50%;
+            margin: 0 auto 6vh auto;
+            text-align: center;
+        }
 
-  .visual-content {
-    aspect-ratio: 16/9;
-    margin: 0 auto;
-    max-width: 600px;
-  }
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3vw;
+            margin-top: 6vh;
+        }
 
-  .nav-buttons {
-    bottom: 1rem;
-    right: 1rem;
-    display: flex;
-  }
-}
+        .solution-card {
+            background: #ffffff;
+            border-radius: 1.2vw;
+            padding: 3vw;
+            box-shadow: 0 0.3vh 2vh rgba(0, 0, 0, 0.04);
+            border: 1px solid #f0f0f0;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            overflow: hidden;
+        }
 
-@media (max-width: 768px) {
-  .slide h1 {
-    font-size: 1.8rem;           /* better for mobile */
-    line-height: 1.3;
-    padding: 0 10px;             /* breathing room */
-  }
+        .solution-card:hover {
+            transform: translateY(-1vh) scale(1.02);
+            box-shadow: 0 2vh 4vh rgba(45, 90, 45, 0.15);
+            border-color: #d4e8d4;
+        }
 
-  .slide p {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    padding: 0 10px;             /* keep text away from edges */
-  }
+        
+        .solution-image {
+            width: 100%;
+            height: 15vh;
+            background: #f8fdf8;
+            border-radius: 0.9vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.8vh;
+            border: 1px solid #e8f5e8;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
 
-  .visual-content {
-    aspect-ratio: 16/9;
-    margin: 0 auto;
-    max-width: 480px;
-  }
+        .solution-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.9vw;
+        }
 
-  .nav-buttons {
-    bottom: 0.8rem;
-    right: 0.8rem;
-    display: flex;
-  }
-}
+        .solution-card:hover .solution-image {
+            transform: scale(1.05);
+        }
 
-/* Optional: ensure highlighted words in headings don't wrap awkwardly */
-.slide h1 .highlight {
-  white-space: nowrap; /* keeps highlighted word together */
-}
+        .card-title {
+            font-size: 1.3vw;
+            color: #1a1a1a;
+            font-weight: 600;
+            margin-bottom: 1.2vh;
+            letter-spacing: -0.01em;
+        }
 
-/* Animation remains the same */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+        .card-description {
+            color: #6b7280;
+            line-height: 1.7;
+            font-size: 1vw;
+            margin-bottom: 1.8vh;
+        }
 
-.slide.active .text-content > * {
-  animation: fadeInUp 0.8s ease forwards;
-}
+        .read-more {
+            color: #2d5a2d;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9vw;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6vw;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 0.5vh 0;
+        }
 
-.slide.active .text-content h1 {
-  animation-delay: 0.2s;
-}
+        .read-more:hover {
+            color: #1a3a1a;
+            transform: translateX(0.5vw);
+        }
 
-.slide.active .text-content p {
-  animation-delay: 0.4s;
-}
+        .read-more::after {
+            content: '→';
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.slide.active .text-content .cta-button {
-  animation-delay: 0.6s;
-}
+        .read-more:hover::after {
+            transform: translateX(0.5vw) scale(1.2);
+        }
 
-
-       /* About */
-
-      .about {
-  background: linear-gradient(
-      rgba(0, 0, 0, 0.4),
-      rgba(0, 0, 0, 0.4)
-    ),
-    url('assets/cg pic.jpg') no-repeat center center;
-  background-size: cover;
-  width: 100%;
-  padding: 120px 40px;
-  display: flex;
-  justify-content: center;
-}
-
-.about-content {
-  background: #f0f8ff;
-  color: #000000;
-  padding: 40px 40px;
-  border-radius: 12px;
-  max-width: 500px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.about h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  line-height: 1.3;
-}
-
-.about p {
-  font-size: 1rem;
-  line-height: 1.4;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.about img {
-  width: 100px;
-  height: auto;
-  margin-bottom: 20px;
-}
-
-
- /* Problem & Solution */
-.problem {
-  width: 100%;                       /* ✅ avoids scrollbar overflow */
-  max-width: 100vw;                  /* ✅ cap to viewport */
-  min-height: 100vh;
-  padding: 80px 20px;
-  text-align: center;
-  background: #001d3d;
-  color: #ffffff;
-  border-radius: 0px;
-  overflow-x: hidden;                /* ✅ prevent side scroll */
-  box-sizing: border-box;           /* ✅ include padding in width calc */
-}
-
-
-.problem h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1.2rem;
-}
-
-.problem p {
-  font-size: 1.1rem;
-  max-width: 700px;
-  margin: 0 auto 12px auto;
-}
-
-.flow1 {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  margin-top: 40px;
-}
-
-.card1 {
-  flex: 1 1 180px;
-  max-width: 220px;
-  min-width: 180px;
-  background: #ffffff;
-  color:#000000;
-  border-radius: 10px;
-  padding: 24px 16px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.card1:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  background-color: #f0f8ff;
-}
-
-.card1 img {
-  width: 50px;
-  height: auto;
-  margin-bottom: 16px;
-}
-
-.solution {
-  width: 100%;                      /* ✅ Fix overflow */
-  max-width: 100vw;                 /* ✅ Safety against horizontal scroll */
-  min-height: 100vh;
-  padding: 80px 20px;
-  text-align: center;
-  background: #004225;
-  color: #ffffff;
-  border-radius: 0;
-  overflow-x: hidden;              /* ✅ Prevent horizontal scroll if anything leaks */
-  box-sizing: border-box;          /* ✅ Ensures padding doesn't add extra width */
-}
-
-
-.solution h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1.2rem;
-}
-
-.solution p {
-  font-size: 1.1rem;
-  max-width: 700px;
-  margin: 0 auto 12px auto;
-}
-
-
-
-        .flow2 {
-        display: flex;
-        flex-wrap: wrap;          
-        gap: 20px;                
-        justify-content: center;   
-        margin-top: 30px;     
+        /* Video Section */
+        .video-section {
+            padding: 8vh 4vw;
+            background: #f8fdf8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
 
 
-.card2 {
-  flex: 1 1 180px;
-  max-width: 220px;
-  min-width: 180px;
-  background: #ffffff;
-  color:#000000;
-  border-radius: 10px;
-  padding: 24px 16px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.card2:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  background-color: #f4fff0;
-}
-        .workflow-video {
-        margin-top: 30px;     
-        text-align: center;    
+        .video-subtitle {
+            font-size: 1.2vw;
+            color: #6b7280;
+            max-width: 60%;
+            margin: 0 auto 6vh auto;
+            text-align: center;
+            line-height: 1.6;
         }
 
-        .workflow-video video {
+        .video-container {
+            display: flex;
+            gap: 4vw;
+            align-items: center;
+            margin-top: 6vh;
+        }
+
+          .video-section video {
         display: block;        
         margin: 0 auto;       
         max-width: 70%;       
@@ -684,239 +704,161 @@ header {
         }
 
 
-        /* Impact */
-        .impact {
-        display: flex;
-        align-items: stretch;      
-        background: #1a1919;
-        color: #fff;
-        min-height: 400px;
-        
-        }
-        .impact-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 20px;
+
+/* Statistics Section */
+.statistics {
+    padding: 8vh 4vw;
+    background: #2d5a2d;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+/* Main container for stats content */
+.stats-content {
+    display: flex;
+    align-items: center;
+    gap: 6vw;
+    width: 100%;
+    margin-top: 4vh;
+}
+
+/* Left side - Statistics */
+.stats-left {
+    flex: 1;
+    max-width: 50%;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3vh;
+    margin-top: 4vh;
+}
+
+.stat-item {
+    text-align: left;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    padding: 3vh 2vw;
+    border-radius: 1vw;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1vh) scale(1.05);
+}
+
+.stat-number {
+    font-size: 3.5vw;
+    font-weight: 700;
+    margin-bottom: 1vh;
+    transition: all 0.3s ease;
+    background: linear-gradient(45deg, #ffffff, #a8e6a3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-item:hover .stat-number {
+    transform: scale(1.1);
+}
+
+.stat-label {
+    font-size: 1.2vw;
+    opacity: 0.9;
+}
+
+/* Right side - Image */
+.stats-right {
+    flex: 1;
+    max-width: 60%;
 }
 
 
-        /* Left content */
-        .impact-content {
-        flex: 1 1 50%;
-        padding: 60px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        }
-
-        .impact-content h2 {
-        font-size: 2rem;
-        margin-bottom: 30px;
-        }
-
-        .impact-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-        .impact-item:last-child {
-        border-bottom: none;
-        }
-        .impact-item .label {
-        font-size: 1rem;
-        }
-        .impact-item .value {
-        font-size: 2rem;
-        font-weight: bold;
-        }
-
-        /* Right image */
-        .impact-image {
-        flex: 1 1 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        padding: 20px;
-        }
-
-        .impact-image img {
-        width: 100%;
-        height: auto;
-        max-height: 350px;         
-        object-fit: contain;       
-        border-radius: 10px;
-        }
-
-      @media (max-width: 768px) {
-  .impact {
-    flex-direction: column;
-  }
-
-  .impact-content,
-  .impact-image {
-    flex: 1 1 100%;
-    text-align: center;
-    padding: 30px 20px;
-  }
-
-  .impact-image img {
-    max-height: 250px;
-    width: auto;
-  }
-
-  .impact-item {
-    justify-content: center;
-    flex-direction: column;
-  }
-
-  .impact-item .label {
-    margin-bottom: 5px;
-  }
+/* Embedded Website Section - Separate from stats */
+.embedded-site-container {
+    margin-top: 10vh;
+    padding-top: 6vh;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-
-/*  General Section  */
-section {
-  padding: 80px 20px;           
-  text-align: center;
-}
-
-section h2 {
-  font-size: 30px;
-  margin-bottom: 25px;
-  line-height: 1.3;
-}
-
-section p {
-  font-size: 18px;
-  margin-bottom: 30px;
-  line-height: 1.6;
-}
-
-
-/* MCCG */
-.embed-section {
-  padding: 60px 20px;
-  width: 100%;              /* full width */
-  min-height: 100vh;         /* optional: full screen height */
-  background: #001d3d;       /* deep dark blue */
-  color: #ffffff;
-  text-align: center;
-  border-radius: 0;          /* remove corner rounding */
-  box-sizing: border-box;
-}
-
-.embed-section h2 {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-.embed-section p {
-  font-size: 16px;
-  margin-bottom: 30px;
-  color: #ffffff;
-}
 
 .embed-wrapper {
-  position: relative;
-  width: 80%;          
-  max-width: 800px;    
-  margin: 0 auto;      
-  padding-top: 45%;    
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);}
+    width: 100%;
+    margin: 0 auto;
+    aspect-ratio: auto;
+    height: 70vh;
+    border-radius: 1.2vw;
+    overflow: hidden;
+    box-shadow: 0 2vh 4vh rgba(0, 0, 0, 0.15);
+    position: relative;
+}
 
 .embed-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* For tablets and below */
-@media (max-width: 768px) {
-  .embed-wrapper {
-    padding-top: 75%; /* taller aspect ratio for mobile */
-  }
-}
-
-/* For very small screens */
-@media (max-width: 480px) {
-  .embed-wrapper {
-    padding-top: 100%; /* even taller for narrow screens */
-  }
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border: none;
 }
 
 
+        /* Request Section */
+        .request {
+            padding: 8vh 4vw;
+            background: #f8fdf8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
 
+        .request::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="30" cy="30" r="1.5" fill="%23d4e8d4" opacity="0.4"/><circle cx="70" cy="50" r="2" fill="%23a8e6a3" opacity="0.3"/><circle cx="50" cy="80" r="1" fill="%232d5a2d" opacity="0.5"/></svg>');
+            animation: float 25s ease-in-out infinite reverse;
+        }
 
-/* Request */
-.request {
-  position: relative;
-  width: 100%;
-  height: 100vh;
+        .request-container {
+            max-width: 80%;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
 
-  background: linear-gradient(
-      rgba(0, 0, 0, 0.3),
-      rgba(0, 0, 0, 0.3)
-    ),
-    url('assets/cg pic2.jpg') no-repeat center center;
+        .request-title {
+            font-size: 3.5vw;
+            color: #1a1a1a;
+            font-weight: 300;
+            margin-bottom: 3vh;
+            letter-spacing: -0.02em;
+        }
 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 120px 40px;
-  margin: 0;
-  margin-bottom: 0;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-
-
-.request-box {
- background: rgba(255, 255, 255, 0.2);       /* transparent white */
-  backdrop-filter: blur(12px);        
- max-width: 500px;   
-  margin: 0 auto;       
-  padding: 40px 20px;   
-  border-radius: 12px;  
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-}
-  
-.request h2 {
-  font-size: 36px;
-  margin-bottom: 25px;        
-  line-height: 1.3;
-  color:#ffffff;
-}
-
-.request p {
-  color:#ffffff;
-  font-size: 18px;
-  margin-bottom: 35px;        
-  line-height: 1.6;
-  max-width: 800px;           
-  margin-left: auto;
-  margin-right: auto;
-}
-
+        .request-subtitle {
+            font-size: 1.3vw;
+            color: #6b7280;
+            margin-bottom: 6vh;
+            line-height: 1.6;
+            max-width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+        }
 .request-btn {
   padding: 14px 30px;
   font-size: 18px;
-  background: #2058ba;
+  background: #2d5a2d;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -927,293 +869,1028 @@ section p {
 }
 
 .request-btn:hover {
-  background: #092d6e;
+  background: #1f3e1f;
+}
+  
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 4vh 4vw;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+
+        
+
+          /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(2vh);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading state */
+        body.loading {
+            opacity: 0;
+        }
+
+
+@media (max-width: 576px) {
+    /* Header adjustments */
+    .header {
+        padding: 1vh 3vw;
+        height: 8vh;
+        min-height: 70px;
+    }
+    
+    .nav-container {
+        max-width: 95%;
+    }
+    
+    .logo img {
+        height: 20px;
+    }
+    
+    .auth-buttons {
+        display: flex;
+        gap: 8px;    
+    }
+
+    .btn-login, .btn-signup {
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 6px;
+    }
+    
+    .hamburger {
+        display: flex;
+    }
+    
+    .hamburger span {
+        width: 25px;
+        height: 3px;
+    }
+    
+    .nav-menu {
+        right: 1vw;
+        min-width: 60vw;
+        padding: 3vh 4vw;
+    }
+    
+    .nav-menu a {
+        font-size: 16px;
+        padding: 2vh 0;
+    }
+    
+    /* Hero section */
+    .hero {
+        margin-top: 8vh;
+        height: calc(100vh - 8vh);
+        padding: 0 3vw;
+    }
+    
+    .slider-container {
+        max-width: 95%;
+    }
+    
+    .slide {
+        grid-template-columns: 1fr;
+        gap: 4vh;
+        text-align: center;
+    }
+    
+    .slide-content {
+        padding: 2vh 1vw;
+        order: 2;
+    }
+    
+    .slide-title {
+        font-size: 28px;
+        margin-bottom: 2vh;
+        line-height: 1.2;
+    }
+    
+    .slide-subtitle {
+        font-size: 16px;
+        margin-bottom: 3vh;
+    }
+    
+    .slide-cta {
+        padding: 12px 24px;
+        font-size: 16px;
+        border-radius: 8px;
+    }
+    
+    .slide-image {
+        height: 25vh;
+        order: 1;
+        border-radius: 12px;
+    }
+    
+    .slider-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .slider-prev {
+        left: -20px;
+    }
+    
+    .slider-next {
+        right: -20px;
+    }
+    
+    .dot {
+        width: 10px;
+        height: 10px;
+    }
+    
+    /* About section */
+    .about {
+        padding: 6vh 3vw;
+    }
+    
+    .section-title {
+        font-size: 28px;
+        margin-bottom: 4vh;
+    }
+    
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 4vh;
+        text-align: center;
+    }
+    
+    .about-text {
+        font-size: 16px;
+        order: 2;
+    }
+    
+    .about-image {
+        height: 25vh;
+        order: 1;
+        border-radius: 12px;
+    }
+    
+    /* Problem section */
+    .problem {
+        padding: 6vh 3vw;
+    }
+    
+    .problems-tag, .solutions-tag {
+        font-size: 14px;
+        padding: 8px 16px;
+        border-radius: 20px;
+    }
+    
+    .problems-subtitle, .solutions-subtitle {
+        font-size: 16px;
+        max-width: 90%;
+        margin-bottom: 4vh;
+    }
+    
+    .problem-grid, .solutions-grid {
+        grid-template-columns: 1fr;
+        gap: 3vh;
+        margin-top: 4vh;
+    }
+    
+    .problem-card, .solution-card {
+        padding: 4vh 3vw;
+        border-radius: 16px;
+    }
+    
+    .card-number {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+        border-radius: 8px;
+        top: 15px;
+        right: 15px;
+    }
+    
+    .problem-image, .solution-image {
+        height: 20vh;
+        border-radius: 12px;
+        margin-bottom: 2vh;
+    }
+    
+    .problem-img {
+        width: 50%;
+    }
+    
+    .problem-title, .card-title {
+        font-size: 20px;
+        margin-bottom: 1.5vh;
+    }
+    
+    .problem-text, .card-description {
+        font-size: 14px;
+    }
+    
+    .read-more {
+        font-size: 14px;
+    }
+    
+    /* Solutions section */
+    .solutions {
+        padding: 6vh 3vw;
+    }
+    
+    /* Video section */
+    .video-section {
+        padding: 6vh 3vw;
+    }
+    
+    .video-subtitle {
+        font-size: 16px;
+        max-width: 90%;
+        margin-bottom: 4vh;
+    }
+    
+    .video-section video {
+        max-width: 95%;
+        border-radius: 12px;
+    }
+    
+    /* Statistics section */
+    .statistics {
+        padding: 6vh 3vw;
+    }
+    
+    .stats-content {
+        flex-direction: column;
+        gap: 4vh;
+    }
+    
+    .stats-left, .stats-right {
+        max-width: 100%;
+    }
+    
+    .stats-grid {
+        gap: 2vh;
+        margin-top: 3vh;
+    }
+    
+    .stat-item {
+        padding: 3vh 3vw;
+        border-radius: 12px;
+        text-align: center;
+    }
+    
+    .stat-number {
+        font-size: 32px;
+        margin-bottom: 1vh;
+    }
+    
+    .stat-label {
+        font-size: 16px;
+    }
+  
+    .stats-right {
+        position: relative;
+    }
+    
+    /* Hide iframe on mobile */
+    .embed-wrapper {
+        display: none;
+    }
+    
+    /* Create mobile-friendly replacement */
+    .stats-right::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #1a4a1a, #2d5a2d);
+        border-radius: 12px;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .stats-right::before {
+        content: 'Visit MICG Official Website 🔗 Click to Open';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+        white-space: pre-line;
+        line-height: 1.6;
+        z-index: 2;
+        padding: 20px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .stats-right:hover::after {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .embedded-site-container {
+        margin-top: 6vh;
+        padding-top: 4vh;
+    }
+    
+    /* Request section */
+    .request {
+        padding: 6vh 3vw;
+    }
+    
+    .request-container {
+        max-width: 95%;
+    }
+    
+    .request-title {
+        font-size: 28px;
+        margin-bottom: 2vh;
+    }
+    
+    .request-subtitle {
+        font-size: 16px;
+        max-width: 90%;
+        margin-bottom: 4vh;
+    }
+    
+    .request-btn {
+        padding: 12px 24px;
+        font-size: 10px;
+        border-radius: 8px;
+    }
+    
+    /* Footer */
+    .footer {
+        padding: 3vh 3vw;
+    }
+    
+    .footer-content {
+        max-width: 95%;
+    }
 }
 
-
-
-
- footer {
-  background: #222;        
-  color: #aaa;              
-  text-align: center;     
-  padding: 20px;             
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        height: auto;
+        min-height: 100vh;
+        padding: 4vh 3vw;
+    }
+    
+    .slide {
+        grid-template-columns: 1fr 1fr;
+        gap: 3vw;
+        text-align: left;
+    }
+    
+    .slide-content {
+        order: 1;
+    }
+    
+    .slide-image {
+        order: 2;
+        height: 35vh;
+    }
+    
+    .slide-title {
+        font-size: 24px;
+    }
+    
+    .slide-subtitle {
+        font-size: 14px;
+    }
 }
 
-footer a {
-  color: inherit;       
-  margin: 0 10px;          
-  text-decoration: none;   
+/* High DPI display adjustments */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .slide-image img, .about-image img, .problem-image img, .solution-image img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
 }
 
-footer a:hover {
-  color: #fff;             
+/* Accessibility improvements for mobile */
+@media (max-width: 768px) {
+    /* Larger touch targets */
+    .hamburger {
+        padding: 12px;
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    .slider-nav {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    .dot {
+        min-width: 44px;
+        min-height: 44px;
+        border-radius: 50%;
+        position: relative;
+    }
+    
+    .dot::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+    
+    /* Better text contrast on mobile */
+    .slide-subtitle, .about-text, .problem-text, .card-description {
+        color: #4a5568;
+    }
+    
+    /* Prevent text scaling issues */
+    .slide-title, .section-title, .request-title {
+        -webkit-text-size-adjust: 100%;
+    }
 }
-
-  </style>
-</head>
-<body>
-  <!-- Header -->
-<header>
-  <nav class="container">
- <div class="logo">
-     <a href="index.html"> <!-- link to your homepage or desired page -->
-
-      <img src="assets/logo.png" alt="Cgenius Logo">
-    </div>
-   <!-- right actions ***********-->  
-    <div class="right-actions">
-       <a href="login_page.html" class="cta-button1">Log In</a>
-      <a href="register_page.html" class="cta-button2">Sign Up</a>
-      <div class="hamburger" onclick="toggleMenu()">☰</div>
-    </div>
-
-
-    <!-- Hidden Nav -->
-    <ul class="nav-links">
-      <li><a href="#cg">About</a></li>
-      <li><a href="#problem">Problem</a></li>
-      <li><a href="#solution">Solutions</a></li>
-      <li><a href="#impact">Statistic</a></li>
-      <li><a href="#mccg">MCCG</a></li>
       
-    </ul>
-  </nav>
-</header>
+    </style>
+</head>
+<body class="loading">
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+            <a href="index.html">
+                 <img src="assets/logo.png" alt="Cgenius Logo">
+            </a>
+                </div>
+            <div class="nav-right">
+            <div class="auth-buttons">
+                <a href="login_page.html" class="btn-login">Log In</a>
+                <a href="register_page.html" class="btn-signup">Sign Up</a>
+                <div class="hamburger" onclick="toggleMenu()">☰</div>
+            </div>
 
+            <div class="nav-menu">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#problems">Problems</a>
+                <a href="#solutions">Solutions</a>
+                <a href="#statistics">MCCG</a>
+            </div>
+        </nav>
+    </header>
 
-<body>
-   <div class="hero-slider" id="about">
-        <div class="slide active">
-            <div class="container">
-                <div class="slide-content">
-                    <div class="text-content">
-                        <h1><span class="highlight">Sustainable</span> Growth</h1>
-                        <p>Corporate governance sets the framework for how a company is directed and controlled—ensuring ethical practices, clear accountability, and long‑term value for all stakeholders.</p>
-                        <a href="#request" class="cta-button">Learn more</a>
+    <!-- Hero Section with Slider -->
+    <section class="hero" id="home">
+        <div class="slider-container">
+            <div class="slider">
+                <!-- Slide 1 -->
+                <div class="slide active">
+                    <div class="slide-content">
+                        <h1 class="slide-title">Strong <span class="highlight"> Corporate Governance, </span> Stronger Business</h1>
+                        <p class="slide-subtitle">Good governance drives transparency, builds stakeholder trust, and lays the foundation for sustainable business growth in a complex global economy.</p>
+                        <a href="#solutions">
+                        <button class="slide-cta">Explore Solutions</button>
+                    </a>
                     </div>
-                    <div class="visual-content">
-                        <div class="image-container">
-                            <img src="assets/slide1.jpg" alt="NVIDIA AI Platform" class="slide-image">
-                           </div>
+                    <div class="slide-image">
+                            <img src="assets/slide1.jpg" alt="slide1" class="slide-image">
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="slide">
-            <div class="container">
-                <div class="slide-content">
-                    <div class="text-content">
-                        <h1>Guiding Companies the <span class="highlight">Right Way</span></h1>
-                        <p>Corporate governance shapes the relationship between management, the board, shareholders, and stakeholders, ensuring they work together to achieve common goals.</p>
-                        <a href="#request" class="cta-button">Get Started</a>
+                <!-- Slide 2 -->
+                <div class="slide">
+                    <div class="slide-content">
+                        <h1 class="slide-title">Stay Ahead with <span class="highlight"> Strong Governance </span></h1>
+                        <p class="slide-subtitle">In today’s fast-paced markets, effective governance isn't just compliance — it’s a strategy for long-term success, resilience, and investor confidence.</p>
+                        <a href="#solutions">
+                        <button class="slide-cta">Learn More</button>
+                    </a>
                     </div>
-                    <div class="visual-content">
-                        <div class="image-container">
-                            <img src="assets/slide2.jpg" alt="Enterprise AI Solutions" class="slide-image">
-                            </div>
+                    <div class="slide-image">
+                            <img src="assets/slide2.jpg" alt="slide2" class="slide-image">
+                     </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="slide">
+                    <div class="slide-content">
+                        <h1 class="slide-title">Trust Begins with <span class="highlight"> Transparency </span></h1>
+                        <p class="slide-subtitle">Effective governance ensures your business operates with openness, fairness, and integrity — strengthening your reputation and stakeholder loyalty.</p>
+                        <a href="#solutions">
+                        <button class="slide-cta">Get Started</button>
+                    </a>
+                    </div>
+                    <div class="slide-image">
+                            <img src="assets/slide3.jpg" alt="slide3" class="slide-image">
                     </div>
                 </div>
+
+                <!-- Navigation buttons -->
+                <button class="slider-nav slider-prev">&lt;</button>
+                <button class="slider-nav slider-next">&gt;</button>
+            </div>
+
+            <!-- Slider dots -->
+            <div class="slider-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
             </div>
         </div>
-
-        <div class="slide">
-            <div class="container">
-                <div class="slide-content">
-                    <div class="text-content">
-                        <h1>Accountability, <span class="highlight">Transparency, </span>Fairness</h1>
-                        <p>Pillars of corporate governance, helping organizations build trust, comply with regulations, and achieve sustainable success.</p>
-                        <a href="#request" class="cta-button">Explore Now</a>
-                    </div>
-                    <div class="visual-content">
-                        <div class="image-container">
-                            <img src="assets/slide3.jpg" alt="Innovation at Scale" class="slide-image">
-                           </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="nav-buttons">
-            <button class="nav-button prev" onclick="prevSlide()">‹</button>
-            <button class="nav-button next" onclick="nextSlide()">›</button>
-        </div>
-
-        <div class="slide-indicators">
-            <div class="indicator active" onclick="currentSlide(1)"></div>
-            <div class="indicator" onclick="currentSlide(2)"></div>
-            <div class="indicator" onclick="currentSlide(3)"></div>
-        </div>
-    </div>
-
- 
-<section class="about" id="cg">
-  <div class="about-content">
-    <img src="assets/cg icon.png">
-    <h1>Corporate Governance</h1>
-    <p>“The system that guides and controls a company.”</p>
-    <p>“Builds trust with investors, customers, and stakeholders."</p>
-    <p>“Strong governance = stronger reputation and performance.”</p>
-
-  </div>
-</section>
-
-
-  <section class="problem" id="problem">
-    <h2>The Problem</h2>
-    <p>Extracting governance data manually is slow, inconsistent, and error‑prone. </p>
-    <p>CGenius uses AI to automate this process, giving you clean, reliable data in seconds.</p>
-    <div class="flow1">
-    <div class="card1">
-       <img src="assets/time icon.png" alt="Time icon" />
-        <h3>1. Time-Consuming</h3>
-      </div>
-      <div class="card1">
-        <img src="assets/error icon.png" alt="Error icon" />
-        <h3>2. Human-Error</h3>
-      </div>
-      <div class="card1">
-         <img src="assets/format icon.png" alt="Format icon" />
-        <h3>3. Different Format</h3>
-      </div>
-    </div>
     </section>
 
-  <section class="solution" id="solution">
-    <h2>How It Works</h2>
-    <div class="flow2">
-      <div class="card2">
-        <h3>1. Upload PDF</h3>
-        <p>Upload your annual report in seconds.</p>
-      </div>
-      <div class="card2">
-        <h3>2. AI Processes</h3>
-        <p>Our system extracts and organizes governance data automatically.</p>
-      </div>
-      <div class="card2">
-        <h3>3. Get Clean Insights</h3>
-        <p>Download Excel/CSV or view on dashboards instantly.</p>
-      </div>
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="section-container">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Corporate governance ensures companies are run with transparency, accountability, and integrity. But extracting relevant data from long annual reports is often slow and inefficient.</p>
+                    <p>That’s why our team developed a smart, web-based system named CGenius, to automate corporate governance data extraction. Our goal is to help organizations save time, improve compliance, and make better decisions through clear, accurate governance insights.</p>
+
+                </div>
+                <div class="about-image">
+                     <img src="assets/cg.png">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem" id="problems">
+        <div class="section-container">
+             <div style="text-align: center;">
+
+            <div class="problems-tag">Problems</div>
+            <h2 class="section-title">Governance Challenges</h2>
+            <p class="problems-subtitle">Extracting governance data from annual reports is harder than it seems — here are the key challenges organizations face today.</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="card-number">01</div>
+                    <div class="problem-image">
+                        <img src="assets/time icon.png" alt="Time icon" class="problem-img">
+                    </div>
+                    <h3 class="problem-title">Time-Consuming</h3>
+                    <p class="problem-text">Manually reviewing lengthy annual reports can take hours or even days. This slows down reporting, delays decision-making, and drains valuable resources across teams.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="card-number">02</div>
+                    <div class="problem-image">
+                        <img src="assets/error icon.png" alt="Error icon"class="problem-img">
+                    </div>
+                    <h3 class="problem-title">Human-Error</h3>
+                    <p class="problem-text">Manual data extraction is prone to mistakes. Errors in interpreting or transcribing governance metrics can lead to compliance issues and weaken stakeholder trust.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="card-number">03</div>
+                    <div class="problem-image">
+                        <img src="assets/format icon.png" alt="Format icon"class="problem-img">
+                    </div>
+                    <h3 class="problem-title">Different Format</h3>
+                    <p class="problem-text">Each company presents annual reports differently — making it difficult to extract consistent governance data. Variations in layout and structure add complexity to the process.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section class="solutions" id="solutions">
+        <div class="section-container">
+            <div style="text-align: center;">
+                <div class="solutions-tag">Solutions</div>
+                <h2 class="section-title">How CGenius Works</h2>
+                <p class="solutions-subtitle">Extracting corporate governance data has never been easier. Just three simple steps to turn bulky reports into actionable insights.</p>
+            </div>
+
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-image">
+                        <img src="assets/pdf.webp" alt="loading"class="solution-img">
+                    </div>
+                    <h3 class="card-title">Upload PDF</h3>
+                    <p class="card-description">
+                        Upload any annual report in seconds. No need to adjust formatting or templates — just drag and drop.
+                    </p>
+                    <a href="#request" class="read-more">Learn more</a>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-image">
+                        <img src="assets/loading.jpg" alt="loading"class="solution-img">
+                    </div>
+                    <h3 class="card-title">AI-Powered Extraction</h3>
+                    <p class="card-description">
+                        Our system extracts and organizes key governance metrics automatically, minimizing errors and saving hours of manual work.
+                    </p>
+                    <a href="#request" class="read-more">Learn more</a>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-image">
+                        <img src="assets/insights.png" alt="loading"class="solution-img">
+                    </div>
+                    <h3 class="card-title">Get Clean Insights</h3>
+                    <p class="card-description">
+                        Access your results through dashboards or export them as Excel/CSV for reporting and compliance use in minutes.
+                    </p>
+                    <a href="#request" class="read-more">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="section-container">
+            <div style="text-align: center;">
+                <h2 class="section-title">See Our Solutions in Action</h2>
+                <p class="video-subtitle">Watch how our platform simplifies corporate governance reporting — from document upload to data visualization — in just a few clicks.</p>
+            </div>
+
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <!-- Replace the src with your actual video URL -->
+                  <video autoplay muted loop playsinline>
+                  <source src="assets/video.mp4" type="video/mp4">
+                  </video>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+  <!-- Statistics Section -->
+<section class="statistics" id="statistics">
+    <div class="section-container">
+        <h2 class="section-title" style="color: white;">MCCG Compliance Benchmarks</h2>
+        <p class="section-subtitle" style="color: white; text-align: center;">These are the minimum standards recommended by the Malaysian Code on Corporate Governance (MCCG) for listed companies.</p>
+        <div class="stats-content">
+            <div class="stats-left">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">50%</div>
+                        <div class="stat-label">Board Independence at least</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">30%</div>
+                        <div class="stat-label">Female Directors at least</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">75%</div>
+                        <div class="stat-label">Board Meeting Attendance at least</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-right">
+             <div class="embed-wrapper">
+                <iframe src="https://www.micg.org.my/" frameborder="0"></iframe>
+            </div>
+        </div>
     </div>
-
-
-  <div class="workflow-video">
-   <video autoplay muted loop playsinline>
-    <source src="assets/video.mp4" type="video/mp4">
-   </video>
-    </div>
-  </section>
-
-
-
-
-<section class="impact">
-  <div class="impact-wrapper" id="impact">
-  <div class="impact">
-  <div class="impact-content" >
-    <h2>MCCG<br>GUIDELINES</h2>
-
-    <div class="impact-item">
-      <span class="label">Board Independence at least</span>
-      <div>
-        <span class="value" data-target="50">0</span><span class="suffix">%</span>
-      </div>
-    </div>
-
-    <div class="impact-item">
-      <span class="label">Female Directors at least</span>
-      <div>
-        <span class="value" data-target="30">0</span><span class="suffix">%</span>
-      </div>
-    </div>
-
-    <div class="impact-item">
-      <span class="label">Board Meeting Attendance at least</span>
-      <div>
-        <span class="value" data-target="75">0</span><span class="suffix">%</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="impact-image">
-    <img src="assets/mccg.png" alt="mccg">
-     </div>
-  </div>
-  </div>
 </section>
 
+    <!-- Request Section -->
+    <section class="request" id="request">
+        <div class="request-container">
+            <h2 class="request-title">Extract Corporate Governance Data in One Click.</h2>
+            <p class="request-subtitle">
+                Get clean, ready-to-use metrics from any annual report in seconds.
+            </p>
+               <a href="register_page.html" class="request-btn">Try It Now</a>
 
-<section class="embed-section" id="mccg">
-  <h2>MCCG Official Website</h2>
-  <p>Explore the MCCG official guidelines directly below:</p>
+        </div>
+    </section>
 
-  <div class="embed-wrapper">
-    <iframe src="https://www.micg.org.my/" frameborder="0"></iframe>
-  </div>
-</section>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 CGenius. All rights reserved.</p>
+        </div>
+    </footer>
 
+    <script>
+        // Remove loading state when page loads
+        window.addEventListener('load', function() {
+            document.body.classList.remove('loading');
+        });
 
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
 
-  <section class="request" id="request">
-      <div class="request-box">
+        // Hamburger menu functionality
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
 
-    <h2>Extract Corporate Governance Data in Seconds, Not Days.</h2>
-    <p>Upload annual reports and instantly get clean, export‑ready governance data.</p>
-    <a href="register_page.html" class="request-btn">Request a Demo</a>
-    </div>
-  </section>
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        });
 
+        // Close menu when clicking on links
+        navMenu.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A') {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
 
-  <footer>
-    <p>© 2025 CGenius. All rights reserved.</p>
-  </footer>
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
 
-  <script>
-function toggleMenu(){
-  document.querySelector('.nav-links').classList.toggle('show');
-}
-      
- let currentSlideIndex = 0;
+        // Slider functionality
+        let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        const indicators = document.querySelectorAll('.indicator');
+        const dots = document.querySelectorAll('.dot');
         const totalSlides = slides.length;
 
         function showSlide(index) {
-            slides.forEach(slide => {
-                slide.classList.remove('active', 'prev');
-            });
-            indicators.forEach(indicator => {
-                indicator.classList.remove('active');
-            });
-
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Show current slide
             slides[index].classList.add('active');
-            indicators[index].classList.add('active');
-
-            if (index > 0) {
-                slides[index - 1].classList.add('prev');
-            }
-
-            currentSlideIndex = index;
+            dots[index].classList.add('active');
         }
 
         function nextSlide() {
-            const nextIndex = (currentSlideIndex + 1) % totalSlides;
-            showSlide(nextIndex);
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
         }
 
         function prevSlide() {
-            const prevIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
-            showSlide(prevIndex);
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
         }
 
-        function currentSlide(index) {
-            showSlide(index - 1);
+        // Navigation buttons
+        document.querySelector('.slider-next').addEventListener('click', nextSlide);
+        document.querySelector('.slider-prev').addEventListener('click', prevSlide);
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+            });
+        });
+
+        // Auto-advance slider
+        let autoAdvance = setInterval(nextSlide, 5000);
+
+        // Pause auto-advance on hover (desktop only)
+        if (window.innerWidth > 768) {
+            const sliderContainer = document.querySelector('.slider-container');
+
+            sliderContainer.addEventListener('mouseenter', function() {
+                clearInterval(autoAdvance);
+            });
+
+            sliderContainer.addEventListener('mouseleave', function() {
+                autoAdvance = setInterval(nextSlide, 5000);
+            });
         }
 
-        setInterval(nextSlide, 10000);
+        
 
-        document.addEventListener('keydown', (e) => {
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: window.innerWidth <= 768 ? 0.05 : 0.1,
+            rootMargin: window.innerWidth <= 768 ? '0px 0px -20px 0px' : '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    
+                    // Add staggered animation for cards
+                    if (window.innerWidth <= 768) {
+                        const siblings = Array.from(entry.target.parentNode.children);
+                        const index = siblings.indexOf(entry.target);
+                        entry.target.style.animationDelay = `${index * 0.1}s`;
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animations
+        document.querySelectorAll('.solution-card, .problem-card, .stat-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links with proper offset
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight - (window.innerWidth <= 768 ? 10 : 20);
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced touch interactions for mobile
+        if (window.innerWidth <= 768) {
+            // Add touch feedback for interactive elements
+            document.querySelectorAll('.solution-card, .problem-card, .stat-item, .slide-cta, .btn-login, .btn-signup').forEach(el => {
+                el.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                el.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            // Touch swipe for slider
+            let startX = 0;
+            let endX = 0;
+            const slider = document.querySelector('.slider');
+
+            slider.addEventListener('touchstart', function(e) {
+                startX = e.touches[0].clientX;
+            });
+
+            slider.addEventListener('touchend', function(e) {
+                endX = e.changedTouches[0].clientX;
+                const diff = startX - endX;
+                
+                if (Math.abs(diff) > 50) { // Minimum swipe distance
+                    if (diff > 0) {
+                        nextSlide(); // Swipe left - next slide
+                    } else {
+                        prevSlide(); // Swipe right - previous slide
+                    }
+                }
+            });
+        }
+
+        // Statistics counter animation with debugging
+function animateCounters() {
+    console.log('animateCounters called'); // Debug log
+    
+    const counters = document.querySelectorAll('.stat-number');
+    console.log('Found counters:', counters.length); // Debug log
+    
+    counters.forEach((counter, index) => {
+        console.log(`Counter ${index}:`, counter.innerText); // Debug log
+        
+        const target = counter.innerText;
+        const isPercentage = target.includes('%');
+        const numericTarget = parseFloat(target.replace(/[^\d.]/g, ''));
+        
+        console.log(`Target: ${target}, Numeric: ${numericTarget}, Is %: ${isPercentage}`); // Debug log
+        
+        // Store original value for reset
+        counter.setAttribute('data-target', target);
+        
+        let current = 0;
+        const increment = numericTarget / 60; // 60 frames for 1 second animation
+        const startTime = performance.now();
+        
+        const updateCounter = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / 1000, 1); // 1 second duration
+            
+            current = numericTarget * progress;
+            
+            if (progress < 1) {
+                if (isPercentage) {
+                    counter.innerText = Math.floor(current) + '%';
+                } else {
+                    counter.innerText = Math.floor(current);
+                }
+                requestAnimationFrame(updateCounter);
+            } else {
+                // Animation complete, show final value
+                counter.innerText = target;
+                console.log(`Animation complete for counter ${index}`); // Debug log
+            }
+        };
+        
+        // Reset counter to 0 before starting animation
+        counter.innerText = isPercentage ? '0%' : '0';
+        
+        // Start animation
+        requestAnimationFrame(updateCounter);
+    });
+}
+
+// Trigger counter animation when statistics section is visible
+const statsObserver = new IntersectionObserver((entries) => {
+    console.log('Observer triggered', entries); // Debug log
+    
+    entries.forEach(entry => {
+        console.log('Entry intersecting:', entry.isIntersecting); // Debug log
+        
+        if (entry.isIntersecting) {
+            console.log('Starting animation...'); // Debug log
+            animateCounters();
+            statsObserver.unobserve(entry.target);
+        }
+    });
+}, { 
+    threshold: 0.3, // Lowered threshold for easier triggering
+    rootMargin: '0px 0px -100px 0px' // Trigger when 100px before bottom of viewport
+});
+
+// Wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, looking for stats section...'); // Debug log
+    
+    const statsSection = document.querySelector('.statistics');
+    
+    if (statsSection) {
+        console.log('Stats section found, setting up observer...'); // Debug log
+        statsObserver.observe(statsSection);
+    } else {
+        console.error('Stats section not found!'); // Debug log
+        
+        // Try alternative selectors
+        const altSection = document.querySelector('[id="statistics"]') || 
+                          document.querySelector('.stats-grid')?.closest('section');
+        
+        if (altSection) {
+            console.log('Alternative stats section found'); // Debug log
+            statsObserver.observe(altSection);
+        } else {
+            console.error('No statistics section found with any selector');
+            
+            // Fallback: trigger animation after 2 seconds
+            setTimeout(() => {
+                console.log('Fallback: triggering animation after timeout');
+                animateCounters();
+            }, 2000);
+        }
+    }
+});
+
+// Alternative: Manual trigger for testing
+// Uncomment the line below to test animation immediately
+// setTimeout(() => animateCounters(), 1000);
+
+        // Keyboard navigation for slider
+        document.addEventListener('keydown', function(e) {
             if (e.key === 'ArrowLeft') {
                 prevSlide();
             } else if (e.key === 'ArrowRight') {
@@ -1221,68 +1898,118 @@ function toggleMenu(){
             }
         });
 
-        let startX = 0;
-        let endX = 0;
+        // Add scroll progress indicator
+        function createScrollProgress() {
+            const progressBar = document.createElement('div');
+            progressBar.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 3px;
+                background: linear-gradient(90deg, #2d5a2d, #a8e6a3);
+                z-index: 9999;
+                transition: width 0.1s ease;
+            `;
+            document.body.appendChild(progressBar);
 
-        document.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-        });
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + '%';
+            });
+        }
 
-        document.addEventListener('touchend', (e) => {
-            endX = e.changedTouches[0].clientX;
-            handleSwipe();
-        });
+        // Initialize scroll progress
+        createScrollProgress();
 
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = startX - endX;
+        // Enhanced section visibility and smooth transitions
+        function initSectionAnimations() {
+            const sections = document.querySelectorAll('section');
+            
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            });
 
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    nextSlide();
-                } else {
-                    prevSlide();
-                }
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                sectionObserver.observe(section);
+            });
+
+            // Make hero visible immediately
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.opacity = '1';
+                hero.style.transform = 'translateY(0)';
             }
         }
 
+        // Initialize section animations
+        initSectionAnimations();
 
+        // Optimize scroll performance
+        let ticking = false;
+        function updateScrollEffects() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            ticking = false;
+        }
 
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(updateScrollEffects);
+                ticking = true;
+            }
+        });
 
+        // Responsive breakpoint handler
+        function handleResponsiveChanges() {
+            const isMobile = window.innerWidth <= 768;
+            
+            // Adjust auto-advance timing for mobile
+            if (isMobile) {
+                clearInterval(autoAdvance);
+                autoAdvance = setInterval(nextSlide, 7000); // Slower on mobile
+            } else {
+                clearInterval(autoAdvance);
+                autoAdvance = setInterval(nextSlide, 5000);
+            }
+        }
 
-const counters = document.querySelectorAll('.value');
-const speed = 90; 
+        // Listen for resize events
+        window.addEventListener('resize', handleResponsiveChanges);
+        
+        // Initial call
+        handleResponsiveChanges();
 
-counters.forEach(counter => {
-  const animate = () => {
-    const target = +counter.getAttribute('data-target');
-    const count = +counter.innerText.replace(/[^0-9]/g,'');
-    const increment = target / speed;
-
-    if (count < target) {
-      counter.innerText = Math.ceil(count + increment).toLocaleString();
-      requestAnimationFrame(animate);
-    } else {
-      counter.innerText = target.toLocaleString();
+        // Add click functionality for mobile MICG link
+if (window.innerWidth <= 576) {
+    const statsRight = document.querySelector('.stats-right');
+    if (statsRight) {
+        statsRight.addEventListener('click', function() {
+            window.open('https://www.micg.org.my/', '_blank');
+        });
+        
+        // Add cursor pointer
+        statsRight.style.cursor = 'pointer';
     }
-  };
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animate();
-        observer.unobserve(counter);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  observer.observe(counter);
-});
-
-
-
-
-</script>
-
+}
+    </script>
 </body>
 </html>
+
