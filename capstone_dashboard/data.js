@@ -16,16 +16,12 @@ async function fetchCGData() {
 
     const isAdmin = adminRows && adminRows.length > 0;
 
-    const { data, error } = await supabase
-      .from("cg_data")
-      .select("*")
-      let query = supabase.from("cg_data").select("*");
-        if (!isAdmin) {
-        query = query.eq("user_id", userId);
-        }
-        const { data, error } = await query;
+    let query = supabase.from("cg_data").select("*");
+    if (!isAdmin) {
+      query = query.eq("user_id", userId);
+    }
 
-    if (error) throw error;
+    const { data, error } = await query;
 
     console.log("📊 Loaded data:", data);
     initDashboard(data); // pass to chart logic in javascript.js

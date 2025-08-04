@@ -314,6 +314,11 @@ function downloadCSV() {
 
 // ==================== SIDEBAR FUNCTIONALITY ====================
 function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.classList.toggle('active');
+}
+
+function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('main-content');
     const toggleBtn = document.getElementById('sidebar-toggle');
