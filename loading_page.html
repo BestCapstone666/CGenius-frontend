@@ -3,21 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading - Your App</title>
+    <title>Loading - CGenius</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family:Roboto
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family:Roboto;
+        }
+
+        .logo {
+            height: 50px;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+        
+        .header {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dashboard-btn {
+            background: #7ac636;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-btn:hover {
+            background: #528724;
+            transform: translateY(-2px);
+        }
+
+        .logout-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #ee5a5a;
+            transform: translateY(-2px);
+        }
+
+        .table-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .table-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
         }
 
         .loading-container {
@@ -31,6 +108,7 @@
             text-align: center;
             transform: translateY(0);
             animation: slideIn 0.6s ease-out;
+            margin: 0 auto;
         }
 
         @keyframes slideIn {
@@ -44,11 +122,11 @@
             }
         }
 
-        .logo {
+        .loading {
             margin-bottom: 40px;
         }
 
-        .logo h1 {
+        .loading h1 {
             color: #333;
             font-size: 2.5rem;
             font-weight: 300;
@@ -57,7 +135,7 @@
             margin-bottom: 5px;
         }
 
-        .logo p {
+        .loading p {
             color: #666;
             font-size: 0.9rem;
         }
@@ -195,9 +273,23 @@
     </style>
 </head>
 <body>
+    <div class="header">
+        <a href="index.html">
+            <img src="assets/logo.png" alt="CGenius Logo" class="logo">
+        </a>
+        <div class="user-info">
+            <button class="table-btn" onclick="window.open('main_page.html', '_blank')">Upload Report</button>
+            <button class="dashboard-btn" 
+                onclick="window.open('https://cgenius-dashboard.onrender.com/?user_id=' + localStorage.getItem('user_id'), '_blank')">
+                View Dashboard
+            </button>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
     <div class="loading-container">
-        <div class="logo">
-            <h1>Welcome</h1>
+        <div class="loading">
+            <h1>Analyzing</h1>
             <p>Please wait while we process</p>
         </div>
 
