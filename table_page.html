@@ -542,7 +542,11 @@
       return;
     }
 
-    const userId = localStorage.getItem("user_id");
+    const userId = localStorage.getItem("user_id") || user?.id;
+    if (!userId) {
+      console.error("❌ user_id is missing.");
+      return;
+    }
 
     fetch(`https://cgenius-docker.onrender.com/get_table_data?user_id=${userId}`)
     .then(res => res.json())
