@@ -13,7 +13,7 @@
         <a href="index.html">
             <img src="assets/logo.png" alt="CGenius Logo" class="logo">
         </a>
-        <h1>Corporate Gorvernance Analysis Platform</h1>
+        <h1>Corporate Governance Analysis Platform</h1> 
         <div class="user-info">
             <span id="userEmail">default@gmail.com</span>
             <button class="table-btn" onclick="window.open('main_page.html', '_blank')">Upload File</button>
@@ -170,9 +170,36 @@
             </div>
         </div>
     </div>
+    
+    <script type="module">
+    import { supabase } from './supabaseClient.js';
 
-    <!-- Load data first, then main JavaScript -->
-    <script src="data.js"></script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const user = session.user;
+        document.getElementById("userEmail").textContent = user.email;
+        localStorage.setItem("user_id", user.id);
+    });
+    </script>
+
+    <!-- main JavaScript -->
     <script src="javascript.js"></script>
+
+    <!-- Attach logout handler -->
+    <script type="module">
+    import { supabase } from './supabaseClient.js';
+
+    window.logout = async function () {
+        await supabase.auth.signOut();
+        localStorage.clear();
+        window.location.href = "login.html";
+    };
+    </script>
+
 </body>
 </html>
