@@ -500,15 +500,16 @@
                         console.log("✅ Job ID received:", result.job_id);
                         showStatusMessage(`✅ ${file.name} uploaded successfully!`, 'success');
 
-                        setTimeout(() => {
-                            // 🧹 Clear all upload cache before redirection
-                            fileListCache = [];
-                            document.getElementById('pdfFile').value = '';
-                            renderFileList([]);
+                    if (!redirected) {
+                        redirected = true;
 
-                            showStatusMessage("📦 Uploading file and initializing extraction...", "success");
-                            window.open(`loading_page.html?job_id=${result.job_id}`, '_blank');
-                        }, 2000);
+                        fileListCache = [];
+                        document.getElementById('pdfFile').value = '';
+                        renderFileList([]);
+
+                        showStatusMessage("📦 Uploading file and initializing extraction...", "success");
+                        window.location.href = `loading_page.html?job_id=${result.job_id}`;
+                    }
                     
 
                     } else {
