@@ -548,7 +548,7 @@
       const { data: sessionData, error } = await supabaseClient.auth.getSession();
       if (error || !sessionData.session) {
         console.error("❌ No user session found");
-        window.location.href = "cgenius-cg-extractor.vercel.app/login_page.html";
+        window.location.href = "login_page.html";
         return;
       }
 
@@ -700,7 +700,7 @@ loadData();
     function logout() {
       localStorage.clear();
       supabaseClient.auth.signOut().then(() => {
-          window.location.href = "cgenius-cg-extractor.vercel.app/login_page.html";
+          window.location.href = "login_page.html";
       });
     }
 </script>
