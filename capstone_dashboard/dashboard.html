@@ -11,7 +11,7 @@
 <body>
     <div class="header">
         <a href="index.html">
-            <img src="assets/logo.png" alt="CGenius Logo" class="logo">
+            <img src="/frontend/assets/logo.png" alt="CGenius Logo" class="logo">
         </a>
         <h1>Corporate Governance Analysis Platform</h1> 
         <div class="user-info">
@@ -170,35 +170,61 @@
             </div>
         </div>
     </div>
-    
-    <script type="module">
-    import { supabase } from './supabaseClient.js';
+
+    <!-- main JavaScript -->
+    <script src="javascript.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+    const SUPABASE_URL = "https://fbhskyalsyeopiydyjhz.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZiaHNreWFsc3llb3BpeWR5amh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2NDI0ODAsImV4cCI6MjA2NjIxODQ4MH0.HmW6geKvj2rPSeaw-Bm2zLaHjgwkE6FwO2DVq3rbYOE";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     document.addEventListener("DOMContentLoaded", async () => {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
-            window.location.href = "login.html";
-            return;
+        const { data: { session }, error } = await supabase.auth.getSession();
+
+        if (!session || error) {
+        console.warn("⚠️ Supabase session not found. Redirecting...");
+        window.location.href = "login.html";
+        return;
         }
 
         const user = session.user;
         document.getElementById("userEmail").textContent = user.email;
         localStorage.setItem("user_id", user.id);
     });
-    </script>
-
-    <!-- main JavaScript -->
-    <script src="javascript.js"></script>
-
-    <!-- Attach logout handler -->
-    <script type="module">
-    import { supabase } from './supabaseClient.js';
 
     window.logout = async function () {
         await supabase.auth.signOut();
         localStorage.clear();
         window.location.href = "login.html";
     };
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const userId = localStorage.getItem("user_id");
+
+        if (!userId) {
+        console.error("❌ No user ID found");
+        window.location.href = "login.html";
+        return;
+        }
+
+        try {
+        const response = await fetch(`https://cgenius-docker.onrender.com/get_table_data?user_id=${userId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("📊 Loaded data:", data);
+        initDashboard(data);
+        } catch (err) {
+        console.error("❌ Failed to fetch dashboard data:", err);
+        }
+    });
     </script>
 
 </body>
