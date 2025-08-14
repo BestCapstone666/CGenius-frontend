@@ -63,6 +63,7 @@ body {
     cursor: pointer;
     font-size: 0.9rem;
     transition: all 0.3s ease;
+    font-family: Georgia, 'Times New Roman', serif;
 }
 
 .upload-btn:hover {
@@ -80,6 +81,7 @@ body {
     cursor: pointer;
     font-size: 0.9rem;
     transition: all 0.3s ease;
+    font-family: Georgia, 'Times New Roman', serif;
 }
 
 .table-btn:hover {
@@ -96,6 +98,7 @@ body {
     cursor: pointer;
     font-size: 0.9rem;
     transition: all 0.3s ease;
+    font-family: Georgia, 'Times New Roman', serif;
 }
 
 .logout-btn:hover {
