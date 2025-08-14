@@ -388,11 +388,6 @@
           <!-- Dynamic rows will go here -->
         </tbody>
       </table>
-      <div id="pager" style="margin-top:10px; display:flex; gap:8px; justify-content:flex-end;">
-        <button onclick="prevPage()">Prev</button>
-        <span id="pageInfo"></span>
-        <button onclick="nextPage()">Next</button>
-      </div>
     </div>
   </div>
 
@@ -410,8 +405,6 @@
     let sampleData = [];
     let filteredData = [];
     let nextId = 1;
-    let PAGE_SIZE = 50; 
-    let currentPage = 1;
 </script>
 
 <script>
@@ -579,7 +572,7 @@
         }
 
         const data = await response.json();
-        console.log(`✅ Loaded ${Array.isArray(data) ? data.length : 0} rows`);
+        console.log("✅ Table data from backend:", data);
 
         if (!Array.isArray(data)) {
             console.error("Backend returned non-array data:", data);
@@ -614,38 +607,38 @@ loadData();
 
     function renderTable() {
         tableBody.innerHTML = "";
-        if (!filteredData.length) {
+        
+        if (filteredData.length === 0) {
             tableBody.innerHTML = `
-            <tr><td colspan="10" style="text-align:center;padding:40px;color:#666;">
+            <tr>
+                <td colspan="8" style="text-align: center; padding: 40px; color: #666;">
                 No companies found. Try adjusting your search or add a new company.
-            </td></tr>`;
+                </td>
+            </tr>
+            `;
             return;
         }
 
-    const start = (currentPage - 1) * PAGE_SIZE;
-    const end = start + PAGE_SIZE;
-    const pageSlice = filteredData.slice(start, end);
+        filteredData.forEach((row, index) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td><input type="text" value="${row.company}" data-field="company" /></td>
+                <td><input type="number" value="${row.year}" data-field="year" /></td>
+                <td><input type="number" value="${row.board}" data-field="board" /></td>
+                <td><input type="number" value="${row.independent}" data-field="independent" /></td>
+                <td><input type="number" value="${row.male}" data-field="male" /></td>
+                <td><input type="number" value="${row.female}" data-field="female" /></td>
+                <td><input type="number" value="${row.board_meeting ?? ''}" data-field="board_meeting" /></td>
+                <td><input type="number" value="${row.audit ?? ''}" data-field="audit" /></td>
+                <td><input type="number" value="${row.audit_meeting ?? ''}" data-field="audit_meeting" /></td>
+                <td class="actions">
+                    <button class="save-btn" onclick="saveRow('${row.id}')">💾 Save</button>
+                    <button class="delete-btn" onclick="deleteRow('${row.id}')">🗑️ Delete</button>
+                </td>
+                `;
 
-    const frag = document.createDocumentFragment();
-    for (const row of filteredData) {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-        <td><input type="text" value="${row.company}" data-field="company" /></td>
-        <td><input type="number" value="${row.year}" data-field="year" /></td>
-        <td><input type="number" value="${row.board}" data-field="board" /></td>
-        <td><input type="number" value="${row.independent}" data-field="independent" /></td>
-        <td><input type="number" value="${row.male}" data-field="male" /></td>
-        <td><input type="number" value="${row.female}" data-field="female" /></td>
-        <td><input type="number" value="${row.board_meeting ?? ''}" data-field="board_meeting" /></td>
-        <td><input type="number" value="${row.audit ?? ''}" data-field="audit" /></td>
-        <td><input type="number" value="${row.audit_meeting ?? ''}" data-field="audit_meeting" /></td>
-        <td class="actions">
-            <button class="save-btn" onclick="saveRow('${row.id}')">💾 Save</button>
-            <button class="delete-btn" onclick="deleteRow('${row.id}')">🗑️ Delete</button>
-        </td>`;
-        frag.appendChild(tr);
-    }
-    tableBody.appendChild(frag);
+            tableBody.appendChild(tr);
+        });
     }
 
     function addRow() {
@@ -685,21 +678,11 @@ loadData();
       }, 3000);
     }
 
-    function debounce(fn, delay = 250) {
-    let t;
-    return (...args) => {
-        clearTimeout(t);
-        t = setTimeout(() => fn(...args), delay);
-    };
-    }
-
     // Search functionality
-    const onSearch = debounce(function (value) {
-    filteredData = filterData(sampleData, value);
-    renderTable();
-    }, 250);
-
-    searchInput.addEventListener("input", (e) => onSearch(e.target.value));
+    searchInput.addEventListener("input", function() {
+      filteredData = filterData(sampleData, this.value);
+      renderTable();
+    });
 
     // Auto-save on input change
     document.addEventListener("input", function(e) {
@@ -712,29 +695,15 @@ loadData();
       }
     });
 
-    function updatePageInfo() {
-    const totalPages = Math.max(1, Math.ceil(filteredData.length / PAGE_SIZE));
-    document.getElementById('pageInfo').textContent = `Page ${currentPage} / ${totalPages}`;
-    }
+    // Initial render
+    renderTable();
 
-    function prevPage() {
-    if (currentPage > 1) {
-        currentPage--;
-        renderTable();
-        updatePageInfo();
+    function logout() {
+      localStorage.clear();
+      supabaseClient.auth.signOut().then(() => {
+          window.location.href = "login_page.html";
+      });
     }
-    }
-
-    function nextPage() {
-    const totalPages = Math.ceil(filteredData.length / PAGE_SIZE);
-    if (currentPage < totalPages) {
-        currentPage++;
-        renderTable();
-        updatePageInfo();
-    }
-    }
-
-updatePageInfo();
 </script>
 
 </body>
