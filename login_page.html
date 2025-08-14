@@ -115,7 +115,7 @@
             transform: translateY(-1px);
         }
 
-        .forgot-password {
+        .no-account {
             text-align: center;
             color: #666;
             text-decoration: none;
@@ -123,7 +123,7 @@
             transition: color 0.3s ease;
         }
 
-        .forgot-password:hover {
+        .no-account:hover {
             color: #51b305;
         }
 
@@ -179,7 +179,7 @@
             <button type="submit" class="login-btn">Sign In</button>
         </form>
 
-        <a href="#" class="forgot-password">Forgot your password?</a>
+        <span>Don't have an account? </span><a href="register_page.html" class="no-account">Create Now</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -245,7 +245,8 @@
         // Auto-clear messages
         document.getElementById('email').addEventListener('input', hideMessages);
         document.getElementById('password').addEventListener('input', hideMessages);
-        </script>
+       
+       </script>
 
 </body>
 </html>
