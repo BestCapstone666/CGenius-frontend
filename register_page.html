@@ -128,6 +128,12 @@
       display: none;
     }
 
+    .login-text {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
     .login-link {
       display: block;
       text-align: center;
@@ -173,7 +179,10 @@
       <button type="submit" class="register-btn">Sign Up</button>
     </form>
 
-  <a>Already have an account? </a><a href="login_page.html" class="login-link">Log In</a>
+    <div class="login-text">
+        <span>Already have an account? </span>
+        <a href="login_page.html" class="login-link">Log In</a>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
