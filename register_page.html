@@ -129,22 +129,25 @@
     }
 
     .login-text {
-    text-align: center;
-    font-size: 0.9rem;
-    margin-top: 10px;
-}
-
-    .login-link {
-      display: block;
-      text-align: center;
-      color: #666;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.3s ease;
+        text-align: center;
+        font-size: 0.9rem;
+        margin-top: 10px;
     }
 
-    .login-link:hover {
-      color: #51b305;
+    .login-text a {
+        color: #51b305;
+        text-decoration: none;
+    }
+
+    .login-text a:hover {
+        text-decoration: underline;
+    }
+
+    .login-link {
+        color: #666;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
     }
 
     @media (max-width: 480px) {
@@ -178,7 +181,6 @@
 
       <button type="submit" class="register-btn">Sign Up</button>
     </form>
-
     <div class="login-text">
         <span>Already have an account? </span>
         <a href="login_page.html" class="login-link">Log In</a>
