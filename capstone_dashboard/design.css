@@ -39,6 +39,7 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
+    font-family: Georgia, 'Times New Roman', serif;
 }
 
 .header h1 {
@@ -52,6 +53,23 @@ body {
     align-items: center;
     gap: 15px;
 }
+
+.upload-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+    background: #528724;
+    transform: translateY(-2px);
+}
+
 
 .table-btn {
     background: #7ac636;
