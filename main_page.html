@@ -560,6 +560,8 @@
                 
                 if (response.ok && result.job_id) {
                     showStatusMessage('✅ Processing started!', 'success');
+                    document.getElementById('urlInput').value = '';  // CLEAR CASHES
+                    document.getElementById('urlInput').disabled = true;
                     window.open(`loading_page.html?job_id=${result.job_id}`, '_blank');
                 } else {
                     showStatusMessage(`Error: ${result?.error || 'Unknown error'}`, 'error');

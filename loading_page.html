@@ -316,6 +316,21 @@
     const progressBar = document.getElementById('progressBar');
     const jobId = new URLSearchParams(window.location.search).get("job_id");
 
+    let pollingInterval = null;
+
+    const FAILURE_STATUSES = [
+      "failed", "processing failed", "error", "timeout", "aborted"
+    ];
+
+    function handleFailure(reason = "Processing failed") {
+        console.error("Failure:", reason);
+        clearInterval(progressInterval);
+        clearInterval(pollingInterval);
+        statusElement.textContent = "❌ Processing failed";
+        subStatusElement.textContent = "Redirecting to upload page in 5 seconds…";
+        setTimeout(() => { window.location.href = "main_page.html"; }, 5000);
+    }
+
     const statusMap = {
         "Received file": { main: "Receiving your document", sub: "Hold tight, we're getting started..." },
         "Uploading files": { main: "Uploading files", sub: "Transferring data securely..." },
@@ -355,6 +370,11 @@
             .then(data => {
                 const rawStatus = data.status;
                 const statusObj = statusMap[rawStatus] || { main: rawStatus, sub: "Please wait..." };
+                const rawLower = (rawStatus || "").toLowerCase();
+                if (data.error || FAILURE_STATUSES.some(s => rawLower.includes(s))) {
+                    handleFailure(data.error || rawStatus || "Unknown backend error");
+                    return; // stop processing this tick
+                }
 
                 statusElement.innerHTML = statusObj.main + '<span class="dots"></span>';
                 subStatusElement.textContent = statusObj.sub;
@@ -365,6 +385,7 @@
 
                 if (rawStatus.startsWith("Completed") || rawStatus.includes("✅")) {
                     clearInterval(progressInterval);
+                    clearInterval(pollingInterval);
                     progressBar.style.width = "100%";
                     setTimeout(() => {
                         const userId = localStorage.getItem("user_id") || "guest";
@@ -374,19 +395,16 @@
             })
             .catch(err => {
                 console.error("Polling error:", err);
-                statusElement.textContent = "❌ Error retrieving status";
+                handleFailure("Network/polling error");
+                statusElement.textContent = "❌ Error";
                 subStatusElement.textContent = "Redirecting to upload page...";
-
-                setTimeout(() => {
-                    window.location.href = "main_page.html";
-                }, 3000);
             });
     }
 
     // 🚀 Run on load
     startProgressBar();
     updateStatusFromBackend(); // First call
-    setInterval(updateStatusFromBackend, 2000); // Poll every 2s
+    pollingInterval = setInterval(updateStatusFromBackend, 2000); // Poll every 2s
 </script>
 </body>
 </html>
