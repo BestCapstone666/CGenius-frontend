@@ -106,96 +106,137 @@ body {
     transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
+
+
+@media (min-width: 1200px) {
     .header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
+        padding: 20px 30px;
+        min-height: 90px;
     }
-
-    .upload-section {
-        padding: 25px 20px;
-    }
-
-    .upload-tabs {
-        flex-direction: column;
+    
+    .header h1 {
+        font-size: 1.8rem;
     }
 }
 
-@media (max-width: 480px) {
-    body {
-        padding: 10px;
+/* Medium Desktop (992px to 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .header h1 {
+        font-size: 1.4rem;
     }
+    
+    .header-btn-base {
+        padding: 7px 12px;
+        font-size: 0.8rem;
+    }
+}
 
+/* Tablet (768px to 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
     .header {
-        padding: 15px;
-        margin-bottom: 20px;
-        border-radius: 10px;
+        padding: 15px 20px;
+        min-height: 65px;
     }
-
+    
+    .header h1 {
+        font-size: 1.2rem;
+    }
+    
     .logo {
         height: 35px;
     }
-
-    .user-info {
-        flex-direction: column;
-        gap: 8px;
-        width: 100%;
-    }
-
-    .table-btn,
-    .dashboard-btn,
-    .logout-btn {
-        width: 50%;
-        padding: 12px;
-        font-size: 0.9rem;
-        border-radius: 6px;
-    }
-
-    .loading-container {
-        margin: 20px;
-        padding: 50px 25px;
-        border-radius: 15px;
+    
+    .header-btn-base {
+        padding: 6px 10px;
+        font-size: 0.75rem;
     }
     
-    .spinner {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .status-message {
-        font-size: 1.1rem;
-    }
-
-    .loading h1 {
-        font-size: 2rem;
+    .user-email {
+        font-size: 0.8rem;
     }
 }
 
-@media (max-width: 560px) {
+/* Mobile Landscape (576px to 767px) */
+@media (max-width: 767px) and (min-width: 576px) {
     .header {
-        padding: 12px;
+        padding: 12px 15px;
+        min-height: 60px;
     }
-
+    
+    .header h1 {
+        font-size: 1rem;
+        max-width: 200px;
+    }
+    
     .logo {
         height: 30px;
     }
+    
+    .user-info {
+        gap: 8px;
+    }
+    
+    .header-btn-base {
+        padding: 5px 8px;
+        font-size: 0.7rem;
+    }
+    
+    .user-email {
+        display: none; /* Hide email on smaller screens */
+    }
+}
 
-    .table-btn,
-    .dashboard-btn,
-    .logout-btn {
-        padding: 10px;
+/* Mobile Portrait (up to 575px) */
+@media (max-width: 575px) {
+    .header {
+        padding: 10px 12px;
+        min-height: 55px;
+        flex-wrap: wrap;
+    }
+    
+    .header-left {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .header h1 {
+        font-size: 0.9rem;
+        max-width: 150px;
+    }
+    
+    .logo {
+        height: 25px;
+    }
+    
+    /* Hide desktop user info, show mobile menu toggle */
+    .user-info {
+        display: none;
+    }
+}
+
+/* Extra Small Mobile (up to 400px) */
+@media (max-width: 400px) {
+    .header {
+        padding: 8px 10px;
+        min-height: 50px;
+    }
+    
+    .header h1 {
         font-size: 0.8rem;
+        max-width: 120px;
     }
-
-    .loading-container {
-        padding: 40px 20px;
+    
+    .logo {
+        height: 22px;
     }
-
-    .loading h1 {
-        font-size: 1.8rem;
+    
+    .mobile-menu {
+        right: 0;
+        left: 0;
+        min-width: auto;
+        border-radius: 0;
     }
-}  
+}
 
 /* Toggle Button - POSITIONED UNDER HEADER */
 #sidebar-toggle {
