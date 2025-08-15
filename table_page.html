@@ -295,13 +295,71 @@
       transform: translateX(0);
     }
 
+    /* Mobile responsive styles */
+    @media (max-width: 1024px) {
+      .header h1 {
+        font-size: 1.4rem;
+      }
+      
+      .user-info {
+        gap: 10px;
+      }
+      
+      .table-btn,
+      .dashboard-btn,
+      .logout-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+    }
+
     @media (max-width: 768px) {
-      .container {
-        padding: 10px;
+      body {
+        padding: 15px;
+      }
+
+      .header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+        align-items: center;
+      }
+
+      .header-left {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .logo {
+        height: 40px;
+        margin-right: 0;
+        margin-bottom: 5px;
       }
 
       .header h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
+        text-align: center;
+      }
+
+      .user-info {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .table-btn,
+      .dashboard-btn,
+      .logout-btn {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+        min-width: 100px;
+      }
+
+      .container {
+        padding: 10px;
       }
 
       .table-container {
@@ -324,20 +382,145 @@
       }
     }
 
-    .loading {
-      text-align: center;
-      padding: 40px;
-      color: #666;
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .header {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        gap: 12px;
+      }
+
+      .logo {
+        height: 35px;
+      }
+
+      .header h1 {
+        font-size: 1.2rem;
+      }
+
+      .user-info {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .table-btn,
+      .dashboard-btn,
+      .logout-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 0.9rem;
+        border-radius: 6px;
+      }
+
+      .search-box {
+        padding: 15px;
+        border-radius: 15px;
+      }
+
+      .search-input {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+      }
+
+      .table-container {
+        padding: 15px;
+        border-radius: 15px;
+      }
+
+      .add-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+
+      th, td {
+        padding: 8px 6px;
+        font-size: 0.8rem;
+      }
+
+      th:nth-child(1), td:nth-child(1) {
+        min-width: 150px;
+      }
+
+      th:nth-child(2), td:nth-child(2) {
+        min-width: 80px;
+      }
+
+      input[type="text"], input[type="number"] {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+      }
+
+      .actions {
+        min-width: 140px;
+      }
+
+      .save-btn, .delete-btn {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+      }
     }
 
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid #e1e5e9;
-      border-top: 4px solid #667eea;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 20px;
+    @media (max-width: 360px) {
+      .header {
+        padding: 12px;
+      }
+
+      .logo {
+        height: 30px;
+      }
+
+      .header h1 {
+        font-size: 1.1rem;
+      }
+
+      .table-btn,
+      .dashboard-btn,
+      .logout-btn {
+        padding: 10px;
+        font-size: 0.8rem;
+      }
+
+      .table-container {
+        padding: 12px;
+      }
+
+      .search-box {
+        padding: 12px;
+      }
+
+      .search-input {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+      }
+
+      .add-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
+
+      th, td {
+        padding: 6px 4px;
+        font-size: 0.75rem;
+      }
+
+      th:nth-child(1), td:nth-child(1) {
+        min-width: 120px;
+      }
+
+      input[type="text"], input[type="number"] {
+        padding: 4px 6px;
+        font-size: 0.75rem;
+      }
+
+      .save-btn, .delete-btn {
+        padding: 3px 6px;
+        font-size: 0.65rem;
+      }
     }
 
     @keyframes spin {
