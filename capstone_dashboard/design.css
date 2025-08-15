@@ -106,6 +106,97 @@ body {
     transform: translateY(-2px);
 }
 
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .upload-section {
+        padding: 25px 20px;
+    }
+
+    .upload-tabs {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .header {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+    }
+
+    .logo {
+        height: 35px;
+    }
+
+    .user-info {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .table-btn,
+    .dashboard-btn,
+    .logout-btn {
+        width: 50%;
+        padding: 12px;
+        font-size: 0.9rem;
+        border-radius: 6px;
+    }
+
+    .loading-container {
+        margin: 20px;
+        padding: 50px 25px;
+        border-radius: 15px;
+    }
+    
+    .spinner {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .status-message {
+        font-size: 1.1rem;
+    }
+
+    .loading h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 560px) {
+    .header {
+        padding: 12px;
+    }
+
+    .logo {
+        height: 30px;
+    }
+
+    .table-btn,
+    .dashboard-btn,
+    .logout-btn {
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+
+    .loading-container {
+        padding: 40px 20px;
+    }
+
+    .loading h1 {
+        font-size: 1.8rem;
+    }
+}  
+
 /* Toggle Button - POSITIONED UNDER HEADER */
 #sidebar-toggle {
     position: fixed;
