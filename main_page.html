@@ -532,20 +532,60 @@
             });
 
 
-        // Handling URL
-        const formData = new FormData();
-        formData.append('url', urlValue);
-        formData.append('user_id', localStorage.getItem('user_id') || '');
+        document.getElementById('urlForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-        const response = await fetch('https://cgenius-docker.onrender.com/api/process-url', {
-        method: 'POST',
-        body: formData
+            const urlValue = document.getElementById('urlInput').value.trim();
+            const submitBtn = this.querySelector('button[type="submit"]');
+
+            if (!urlValue) {
+                showStatusMessage('Please enter a valid URL.', 'error');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing URL...';
+            showStatusMessage('Processing URL content...', 'success');
+
+            try {
+                const formData = new FormData();
+                formData.append('url', urlValue);
+                formData.append('user_id', localStorage.getItem('user_id') || '');
+
+                const response = await fetch('https://cgenius-docker.onrender.com/api/process-url', {
+                method: 'POST',
+                body: formData // let browser set multipart boundaries
+                });
+
+                // Try to read JSON even on non-2xx to surface backend error text
+                let result = {};
+                try { result = await response.json(); } catch (_) {}
+
+                if (response.ok && result.job_id) {
+                showStatusMessage('✅ URL submitted. Starting extraction…', 'success');
+                window.open(`loading_page.html?job_id=${encodeURIComponent(result.job_id)}`, '_blank');
+                return; // stop after redirect
+                }
+
+                const errMsg = result?.error || result?.message || 'Processing failed';
+                showStatusMessage(`❌ URL processing failed: ${errMsg}`, 'error');
+
+            } catch (error) {
+                console.error('URL processing error:', error);
+                showStatusMessage(`Processing failed: ${error.message}`, 'error');
+            } finally {
+                // Preserve your existing UI behavior
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Process URL Content';
+                document.getElementById('pdfFile').disabled = false;
+                dropZone.classList.remove('disabled-drop');
+
+                // Clear selection (same as your current finally block)
+                fileListCache = [];
+                document.getElementById('pdfFile').value = '';
+                renderFileList([]);
+            }
         });
-
-        if (response.ok && result.job_id) {
-        window.open(`loading_page.html?job_id=${encodeURIComponent(result.job_id)}`, '_blank');
-        }
-
             
         // Utility functions
         function getAuthToken() {
