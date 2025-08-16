@@ -1338,7 +1338,286 @@
         -webkit-text-size-adjust: 100%;
     }
 }
-      
+        
+/* Tablet Responsive Styles */
+@media (min-width: 577px) and (max-width: 1024px) {
+    /* Header adjustments */
+    .header {
+        padding: 1vh 3vw;
+        height: 7vh;
+        min-height: 65px;
+    }
+    
+    .nav-container {
+        max-width: 92%;
+    }
+    
+    .logo img {
+        height: 35px;
+    }
+    
+    .btn-login, .btn-signup {
+        padding: 10px 18px;
+        font-size: 1.5vw;
+        border-radius: 8px;
+    }
+    
+    .hamburger span {
+        width: 1.8vw;
+        height: 0.3vh;
+    }
+    
+    .nav-menu {
+        right: 1.5vw;
+        min-width: 25vw;
+        padding: 2.5vh 3vw;
+    }
+    
+    .nav-menu a {
+        font-size: 1.5vw;
+        padding: 1.5vh 0;
+    }
+    
+    /* Hero section */
+    .hero {
+        margin-top: 7vh;
+        height: calc(100vh - 7vh);
+        padding: 0 3vw;
+    }
+    
+    .slider-container {
+        max-width: 92%;
+    }
+    
+    .slide {
+        gap: 3vw;
+        min-height: 65vh;
+    }
+    
+    .slide-content {
+        padding: 2vh 1.5vw;
+    }
+    
+    .slide-title {
+        font-size: 3vw;
+        margin-bottom: 2.5vh;
+    }
+    
+    .slide-subtitle {
+        font-size: 1.8vw;
+        margin-bottom: 3vh;
+    }
+    
+    .slide-cta {
+        padding: 1.2vh 2.2vw;
+        font-size: 1.2vw;
+        border-radius: 8px;
+    }
+    
+    .slide-image {
+        height: 32vh;
+        border-radius: 14px;
+    }
+    
+    .slider-nav {
+        width: 2.8vw;
+        height: 2.8vw;
+        font-size: 1.1vw;
+    }
+    
+    .slider-prev {
+        left: -3.5vw;
+    }
+    
+    .slider-next {
+        right: -3.5vw;
+    }
+    
+    .dot {
+        width: 0.7vw;
+        height: 0.7vw;
+    }
+    
+    /* About section */
+    .about {
+        padding: 7vh 3vw;
+    }
+    
+    .section-title {
+        font-size: 3vw;
+        margin-bottom: 5vh;
+    }
+    
+    .about-content {
+        gap: 3.5vw;
+    }
+    
+    .about-text {
+        font-size: 1.8vw;
+        line-height: 1.7;
+    }
+    
+    .about-image {
+        height: 35vh;
+        border-radius: 14px;
+    }
+    
+    /* Problem and Solutions sections */
+    .problem, .solutions {
+        padding: 7vh 3vw;
+    }
+    
+    .problems-tag, .solutions-tag {
+        font-size: 1.5vw;
+        padding: 1vh 2vw;
+        border-radius: 20px;
+    }
+    
+    .problems-subtitle, .solutions-subtitle {
+        font-size: 1.8vw;
+        max-width: 65%;
+        margin-bottom: 5vh;
+    }
+    
+    .problem-grid, .solutions-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5vw;
+        margin-top: 5vh;
+    }
+    
+    /* Make the third card span full width on tablet */
+    .problem-grid .problem-card:nth-child(3),
+    .solutions-grid .solution-card:nth-child(3) {
+        grid-column: 1 / -1;
+        max-width: 60%;
+        margin: 0 auto;
+    }
+    
+    .problem-card, .solution-card {
+        padding: 2.8vw;
+        border-radius: 18px;
+    }
+    
+    .card-number {
+        width: 4.4vw;
+        height: 4.4vw;
+        font-size: 1.5vw;
+        border-radius: 10px;
+        top: 1.5vh;
+        right: 1.5vw;
+    }
+    
+    .problem-image, .solution-image {
+        height: 20vh;
+        border-radius: 20px;
+        margin-bottom: 2.2vh;
+    }
+    
+    .problem-img {
+        width: 50%;
+    }
+    
+    .problem-title, .card-title {
+        font-size: 2vw;
+        margin-bottom: 1.3vh;
+    }
+    
+    .problem-text, .card-description {
+        font-size: 1.2vw;
+        line-height: 1.6;
+    }
+    
+    .read-more {
+        font-size: 1vw;
+        gap: 0.5vw;
+    }
+    
+    /* Video section */
+    .video-section {
+        padding: 7vh 3vw;
+    }
+    
+    .video-subtitle {
+        font-size: 1.8vw;
+        max-width: 75%;
+        margin-bottom: 5vh;
+    }
+    
+    .video-section video {
+        max-width: 100%;
+        border-radius: 16px;
+    }
+    
+    /* Request section */
+    .request {
+        padding: 7vh 3vw;
+    }
+    
+    .request-container {
+        max-width: 85%;
+    }
+    
+    .request-title {
+        font-size: 3vw;
+        margin-bottom: 2.5vh;
+    }
+    
+    .request-subtitle {
+        font-size: 1.8vw;
+        max-width: 80%;
+        margin-bottom: 5vh;
+    }
+    
+    .request-btn {
+        padding: 14px 28px;
+        font-size: 10px;
+        border-radius: 10px;
+    }
+    
+    /* Footer */
+    .footer {
+        padding: 4vh 3vw;
+    }
+    
+    .footer-content {
+        max-width: 92%;
+    }
+}
+
+@media (min-width: 577px) and (max-width: 1024px) and (orientation: landscape) {
+    .hero {
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .slide {
+        min-height: 80vh;
+    }
+    
+    .slide-image {
+        height: 40vh;
+    }
+    
+    .stats-content {
+        flex-direction: row;
+        gap: 4vw;
+    }
+    
+    .stats-left, .stats-right {
+        max-width: 50%;
+        margin: 0;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5vh;
+    }
+    
+    .stat-item {
+        text-align: left;
+        padding: 2vh 2vw;
+    }
+}
     </style>
 </head>
 <body class="loading">
